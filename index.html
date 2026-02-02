@@ -1,678 +1,632 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inikatalogku - Solusi Katalog Online Terlengkap</title>
+    <title>IniKatalogku - Solusi Katalog Digital Tanpa Batas</title>
     
-    <!-- Google Fonts & Icons -->
+    <!-- Fonts: Inter for premium clean look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Config for Brand Colors -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            400: '#FCD34D',
+                            500: '#d4af37', // Brand Color
+                            600: '#B48818',
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'shine': 'shine 2s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        /* --- RESET & VARIABLES --- */
-        :root {
-            /* Landing Page Variables */
-            --bg-dark: #050505;
-            --bg-card: #141414;
-            --text-main: #ffffff;
-            --text-muted: #a1a1a6;
-            --border: rgba(255,255,255,0.1);
-            --font-stack: 'Inter', sans-serif;
-
-            /* Mockup App Variables (Default: Gold Theme) */
-            --app-bg: #121a2e;
-            --app-card-bg: #1e293b;
-            --app-text-main: #f8fafc;
-            --app-text-muted: #94a3b8;
-            --app-border: #334155;
-            --app-primary: #d4af37; 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-stack);
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
-            line-height: 1.6;
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #d4af37, #fde68a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section { padding: 100px 0; }
-        
-        h1, h2, h3 { letter-spacing: -0.02em; font-weight: 700; }
-        p { color: var(--text-muted); }
-
-        /* --- BUTTONS --- */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-primary {
-            background: var(--text-main); color: #000;
-        }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,255,255,0.3); }
-        
-        .btn-outline {
-            border: 1px solid var(--border); background: transparent; color: white;
-        }
-        .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
-
-        /* --- NAVBAR --- */
-        nav {
-            padding: 20px 0; position: fixed; width: 100%; top: 0; z-index: 100;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            transition: padding 0.3s;
-        }
-        nav.scrolled { padding: 15px 0; }
-        .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -1px; }
-        .logo span { color: var(--app-primary); transition: color 0.5s; }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            min-height: 100vh; display: flex; align-items: center; padding-top: 80px;
-            background: radial-gradient(circle at 70% 50%, #1a1a2e 0%, #050505 70%);
-            position: relative;
-            overflow: hidden;
+        /* Glass Effect */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .hero-grid {
-            display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 4rem; line-height: 1.1; margin-bottom: 25px;
-            background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero-text p { font-size: 1.2rem; margin-bottom: 40px; max-width: 500px; }
-        
-        .hero-features { display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
-        .tag { 
-            background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 20px; 
-            font-size: 0.9rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 8px;
-        }
-
-        /* --- AMBASSADOR & MOCKUP WRAPPER --- */
-        .ambassador-wrapper {
-            position: relative; height: 700px; display: flex; justify-content: center; align-items: center;
-            /* Removed background image styling as per request */
-        }
-
-        /* --- THE PHONE MOCKUP FRAME (GENERAL) --- */
+        /* Mobile Mockup CSS Construction */
         .phone-mockup {
-            width: 320px; height: 650px;
-            background: #000; border: 12px solid #2d2d2d;
-            border-radius: 45px; overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 2px #444;
-            position: relative; z-index: 10;
-        }
-        
-        /* Notch */
-        .phone-mockup::before {
-            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 120px; height: 25px; background: #2d2d2d;
-            border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; z-index: 20;
-        }
-
-        /* HERO MOCKUP SPECIFIC STYLES */
-        .hero .phone-mockup {
-            position: absolute; right: 0; top: 50%;
-            /* Default Tilt */
-            transform: translateY(-50%) rotate(-10deg);
-            /* Animation settings */
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Hover Effect: Straighten up */
-        .hero .phone-mockup:hover {
-            transform: translateY(-50%) rotate(0deg);
-        }
-
-        /* STATIC MOCKUP FOR BOTTOM SECTION */
-        .phone-static {
-            position: relative; top: auto; right: auto; transform: none !important;
-            margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        /* --- APP SCREEN CONTENT --- */
-        .app-screen {
-            height: 100%; width: 100%;
-            background: var(--app-bg);
-            display: flex; flex-direction: column;
-            font-family: 'Inter', sans-serif;
-            color: var(--app-text-main);
-            transition: background 0.5s ease;
-            overflow-y: auto;
-            padding-bottom: 70px;
-        }
-        
-        .app-screen::-webkit-scrollbar { width: 4px; }
-        .app-screen::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
-
-        /* App Components */
-        .app-nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--app-border);
-            backdrop-filter: blur(5px);
-        }
-        .app-brand h3 { font-size: 1rem; font-weight: 700; color: var(--app-primary); }
-        .app-brand span { font-size: 0.7rem; color: var(--app-text-muted); }
-        
-        .app-btn-wa {
-            background: #25D366; color: white; border: none; border-radius: 6px;
-            padding: 6px 12px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 4px;
-        }
-
-        .app-hero { text-align: center; padding: 20px 16px; }
-        .app-hero h2 { font-size: 1.2rem; margin-bottom: 5px; background: linear-gradient(to right, #fff, #999); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .app-hero p { font-size: 0.8rem; }
-
-        .app-product-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px 16px;
-        }
-
-        .app-card {
-            background: var(--app-card-bg); border-radius: 12px; overflow: hidden;
-            border: 1px solid var(--app-border);
-            transition: transform 0.2s, border-color 0.2s; cursor: pointer;
+            border: 12px solid #1e293b;
+            border-radius: 40px;
+            overflow: hidden;
             position: relative;
+            background: #0f172a;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
-        .app-card:hover { transform: translateY(-3px); border-color: var(--app-primary); }
-
-        .card-img-wrap {
-            aspect-ratio: 1/1; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden;
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 25px;
+            background: #1e293b;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 20;
         }
-        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         
-        .badge-bs {
-            position: absolute; top: 6px; right: 6px; background: #ef4444; color: white;
-            font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3); z-index: 2;
+        /* Price Strikethrough Animation */
+        .price-cross {
+            position: relative;
+            display: inline-block;
         }
-
-        .card-body { padding: 8px; }
-        .card-title { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .card-price { font-size: 0.85rem; font-weight: 700; color: var(--app-primary); margin-top: 2px; }
-
-        /* Floating Action Button */
-        .app-fab {
-            position: absolute; bottom: 20px; right: 20px;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: var(--app-primary); color: #121a2e;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            cursor: pointer; z-index: 50; transition: transform 0.2s;
-        }
-        .app-fab:hover { transform: scale(1.1); }
-        .fab-badge {
-            position: absolute; top: -5px; right: -5px; background: #ef4444; color: white;
-            font-size: 0.7rem; font-weight: bold; width: 20px; height: 20px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; border: 2px solid var(--app-bg);
-        }
-
-        /* App Detail Modal */
-        .app-modal {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.8); z-index: 100;
-            display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-        }
-        .app-modal.active { opacity: 1; pointer-events: all; }
-        
-        .app-modal-content {
-            width: 100%; height: 85%; background: var(--app-card-bg);
-            border-top-left-radius: 20px; border-top-right-radius: 20px;
-            padding: 20px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            display: flex; flex-direction: column; border: 1px solid var(--app-border);
-        }
-        .app-modal.active .app-modal-content { transform: translateY(0); }
-        
-        .modal-close { align-self: flex-end; cursor: pointer; font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
-        .modal-img { width: 100%; height: 180px; background: #000; border-radius: 12px; object-fit: cover; margin-bottom: 15px; }
-        .modal-btn {
-            background: var(--app-primary); color: #121a2e; font-weight: bold; padding: 12px;
-            border-radius: 10px; text-align: center; margin-top: auto; cursor: pointer;
-        }
-
-        /* --- FEATURES SECTION --- */
-        .features-section { background: #0a0a0a; position: relative; }
-        .section-title { text-align: center; margin-bottom: 80px; }
-        .section-title h2 { font-size: 2.5rem; margin-bottom: 15px; }
-
-        .features-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;
-        }
-
-        .feature-card {
-            background: rgba(255,255,255,0.03); padding: 40px 30px; border-radius: 20px;
-            border: 1px solid var(--border); transition: 0.3s;
-        }
-        .feature-card:hover { background: rgba(255,255,255,0.05); transform: translateY(-10px); border-color: var(--app-primary); }
-        .feature-icon { font-size: 2.5rem; margin-bottom: 25px; color: var(--app-primary); transition: color 0.5s; }
-        
-        /* --- THEME DEMO SECTION --- */
-        .theme-demo-section { text-align: center; }
-        
-        .theme-controls { 
-            display: flex; justify-content: center; gap: 20px; margin-bottom: 60px; flex-wrap: wrap; 
-        }
-
-        /* Colored Theme Buttons */
-        .theme-btn {
-            padding: 15px 35px; border-radius: 50px; border: 2px solid transparent; /* Border space prepared */
-            color: #121a2e; /* Dark text for contrast against colors */
-            font-weight: 700; cursor: pointer; transition: all 0.3s ease;
-            font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-
-        .theme-btn:hover { transform: translateY(-3px); }
-
-        /* Active State: White Border */
-        .theme-btn.active {
-            border-color: #fff;
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
-            transform: scale(1.1);
-        }
-
-        /* --- FOOTER --- */
-        footer { border-top: 1px solid var(--border); padding: 60px 0 30px; background: #020202; }
-        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-        .footer-logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; display: block; }
-        .footer-links li { margin-bottom: 10px; }
-        .footer-links a:hover { color: var(--app-primary); }
-        .copyright { text-align: center; color: #555; font-size: 0.8rem; margin-top: 40px; border-top: 1px solid #111; padding-top: 20px; }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 968px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-text h1 { font-size: 3rem; }
-            .hero-features { justify-content: center; }
-            .hero-text p { margin: 0 auto 40px; }
-            
-            .ambassador-wrapper { height: 600px; order: -1; margin-bottom: 30px; }
-            
-            .hero .phone-mockup { 
-                width: 280px; height: 580px; 
-                right: 50%; transform: translateX(50%) rotate(-10deg); /* Tilt maintained */
-            }
-            .hero .phone-mockup:hover {
-                transform: translateX(50%) rotate(0deg);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hero-text h1 { font-size: 2.2rem; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .theme-controls { gap: 10px; }
-            .theme-btn { padding: 12px 20px; font-size: 0.8rem; }
+        .price-cross::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ef4444;
+            transform: rotate(-5deg);
         }
     </style>
 </head>
-<body>
+<body class="bg-dark-900 text-white font-sans antialiased overflow-x-hidden selection:bg-gold-500 selection:text-white">
 
-    <!-- NAVBAR -->
-    <nav id="navbar">
-        <div class="container nav-content">
-            <a href="#" class="logo">Ini<span>Katalogku</span></a>
-            <a href="#order" class="btn btn-primary">Pesan Aplikasi</a>
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-dark-900/80 backdrop-blur-md border-b border-white/5"></div>
+        <div class="container mx-auto px-6 py-4 relative flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="https://inikatalogku.biz.id/web-app-manifest-192x192.png" alt="Logo" class="w-10 h-10 rounded-xl object-contain bg-white/10 p-1">
+                <span class="text-xl font-bold tracking-tight">Ini<span class="text-gold-500">Katalogku</span></span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#features" class="hover:text-gold-400 transition-colors">Fitur</a>
+                <a href="#benefit" class="hover:text-gold-400 transition-colors">Keunggulan</a>
+                <a href="#pricing" class="hover:text-gold-400 transition-colors">Harga</a>
+                <a href="#faq" class="hover:text-gold-400 transition-colors">FAQ</a>
+            </div>
+
+            <a href="order" target="_blank" class="hidden md:block bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-dark-900 font-bold px-6 py-2.5 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-gold-500/20">
+                Pesan Sekarang
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white text-xl" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-dark-800 border-b border-white/10 p-4 flex-col gap-4 shadow-2xl">
+            <a href="#features" class="block text-gray-300 hover:text-gold-400">Fitur</a>
+            <a href="#benefit" class="block text-gray-300 hover:text-gold-400">Keunggulan</a>
+            <a href="#pricing" class="block text-gray-300 hover:text-gold-400">Harga</a>
+            <a href="order" class="block text-center bg-gold-500 text-dark-900 font-bold py-3 rounded-xl">
+                Pesan Sekarang
+            </a>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <header class="hero">
-        <div class="container">
-            <div class="hero-grid">
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <!-- Text Content -->
+            <div class="text-center lg:text-left space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs font-bold uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></span>
+                    Solusi Katalog Digital Terbaik
+                </div>
+                <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight">
+                    Ubah Chat Panjang <br>
+                    Menjadi <span class="text-gradient">Penjualan Instan</span>.
+                </h1>
+                <p class="text-gray-400 text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Lupakan file PDF yang membosankan dan chat WA yang berantakan. Kelola produk, update stok, dan terima pesanan dalam satu dashboard real-time yang elegan.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
+                    <a href="order" target="_blank" class="w-full sm:w-auto px-8 py-4 bg-gold-500 hover:bg-gold-400 text-dark-900 font-bold text-lg rounded-xl transition-all transform hover:-translate-y-1 shadow-lg shadow-gold-500/30 flex items-center justify-center gap-2 group">
+                        Mulai Sekarang <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="demo" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-gray-600 hover:border-gold-500 text-white font-medium text-lg rounded-xl transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play text-gold-500 text-xs"></i> Lihat Demo
+                    </a>
+                </div>
+                <p class="text-xs text-gray-500 mt-4">*Tanpa biaya langganan bulanan. Bayar sekali, pakai selamanya.</p>
+            </div>
+
+            <!-- Visual Content (CSS Mockup) -->
+            <div class="relative flex justify-center lg:justify-end animate-float">
+                <!-- Decorative Elements behind phone -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-blue-500/20 blur-3xl rounded-full"></div>
                 
-                <!-- Copywriting -->
-                <div class="hero-text">
-                    <div class="hero-features">
-                        <div class="tag"><i class="fa-solid fa-check-circle" style="color:var(--app-primary)"></i> Dark Mode Ready</div>
-                        <div class="tag"><i class="fa-solid fa-check-circle" style="color:var(--app-primary)"></i> WA Checkout</div>
-                    </div>
-                    <h1>Jualan Lebih <span style="color: var(--app-primary); -webkit-text-fill-color: initial;">Profesional</span>.</h1>
-                    <p>Ubah tampilan toko online Anda sesuai branding. Pilih dari 5 Tema Premium, fitur keranjang belanja, dan katalog produk yang mudah dikelola.</p>
-                    
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; @media(min-width: 968px){justify-content: flex-start;}">
-                        <a href="order" class="btn btn-primary">Buat Toko Sekarang</a>
-                        <a href="demo" class="btn btn-outline">Coba Demo Tema</a>
-                    </div>
-                </div>
-
-                <!-- Phone Mockup Showcase (Top - Tilted) -->
-                <div class="ambassador-wrapper">
-                    <!-- No background image here -->
-                    
-                    <!-- The Phone (Tilted) -->
-                    <div class="phone-mockup">
-                        <!-- APP SCREEN STARTS HERE -->
-                        <div class="app-screen" id="appScreen1">
-                            
-                            <!-- App Navbar -->
-                            <div class="app-nav">
-                                <div class="app-brand">
-                                    <h3 id="storeNameMock">Toko Premium</h3>
-                                    <span>Belanja Mudah & Cepat</span>
-                                </div>
-                                <button class="app-btn-wa">
-                                    <i class="fa-brands fa-whatsapp"></i> Hubungi
-                                </button>
-                            </div>
-
-                            <!-- App Hero -->
-                            <div class="app-hero">
-                                <h2>Selamat Datang</h2>
-                                <p>Temukan koleksi eksklusif kami.</p>
-                            </div>
-
-                            <!-- Product Grid -->
-                            <div class="app-product-grid">
-                                <!-- Product 1 (Best Seller) -->
-                                <div class="app-card" onclick="toggleModal('appModal1')">
-                                    <div class="badge-bs">Best Seller</div>
-                                    <div class="card-img-wrap">
-                                        <img src="https://picsum.photos/seed/sepatu/200/200" alt="Produk">
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-title">Sneakers Urban</div>
-                                        <div class="card-price">Rp 250.000</div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Product 2 -->
-                                <div class="app-card" onclick="toggleModal('appModal1')">
-                                    <div class="card-img-wrap">
-                                        <img src="https://picsum.photos/seed/jam/200/200" alt="Produk">
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-title">Jam Tangan Klasik</div>
-                                        <div class="card-price">Rp 150.000</div>
-                                    </div>
-                                </div>
-
-                                <!-- Product 3 -->
-                                <div class="app-card" onclick="toggleModal('appModal1')">
-                                    <div class="card-img-wrap">
-                                        <img src="https://picsum.photos/seed/tas/200/200" alt="Produk">
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-title">Tas Ransel Kanvas</div>
-                                        <div class="card-price">Rp 185.000</div>
-                                    </div>
-                                </div>
-
-                                <!-- Product 4 -->
-                                <div class="app-card" onclick="toggleModal('appModal1')">
-                                    <div class="badge-bs">Baru</div>
-                                    <div class="card-img-wrap">
-                                        <img src="https://picsum.photos/seed/kacamata/200/200" alt="Produk">
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-title">Kacamata Hitam</div>
-                                        <div class="card-price">Rp 95.000</div>
-                                    </div>
+                <div class="phone-mockup w-[300px] h-[600px] shadow-2xl relative z-20 border-4 border-slate-700">
+                    <div class="phone-notch"></div>
+                    <!-- Screen Content -->
+                    <div class="w-full h-full bg-dark-800 overflow-hidden flex flex-col pt-8">
+                        <!-- App Header -->
+                        <div class="px-4 pb-4 border-b border-gray-700 flex justify-between items-center bg-dark-900">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gold-500 rounded-md"></div>
+                                <div class="flex flex-col">
+                                    <div class="w-24 h-2.5 bg-gray-600 rounded"></div>
+                                    <div class="w-16 h-1.5 bg-gray-700 rounded mt-1"></div>
                                 </div>
                             </div>
-
-                            <!-- Floating Cart Button -->
-                            <div class="app-fab">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <div class="fab-badge">2</div>
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-[10px] text-white">
+                                <i class="fa-brands fa-whatsapp"></i>
                             </div>
-
-                            <!-- Simulated Detail Modal -->
-                            <div class="app-modal" id="appModal1">
-                                <div class="app-modal-content">
-                                    <div class="modal-close" onclick="toggleModal('appModal1')">&times;</div>
-                                    <img src="https://picsum.photos/seed/sepatu/400/300" class="modal-img" alt="Detail">
-                                    <h3 style="font-size:1.2rem; margin-bottom:5px;">Sneakers Urban</h3>
-                                    <p style="font-size:0.8rem; color: #94a3b8; margin-bottom:10px;">Kategori: Sepatu Pria</p>
-                                    <h2 style="font-size:1.5rem; color:var(--app-primary); margin-bottom:15px;">Rp 250.000</h2>
-                                    <p style="font-size:0.85rem; line-height:1.5; margin-bottom:20px;">
-                                        Sepatu sneakers bahan berkualitas tinggi, cocok untuk aktivitas sehari-hari. Sol karet anti selip.
-                                    </p>
-                                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
-                                        <button style="background:rgba(255,255,255,0.1); border:none; color:white; width:30px; height:30px; border-radius:5px;">-</button>
-                                        <span>1</span>
-                                        <button style="background:rgba(255,255,255,0.1); border:none; color:white; width:30px; height:30px; border-radius:5px;">+</button>
-                                    </div>
-                                    <div class="modal-btn">
-                                        + Keranjang
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
-                        <!-- APP SCREEN ENDS -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+                        
+                        <!-- Search Bar -->
+                        <div class="px-4 py-3">
+                            <div class="w-full h-8 bg-dark-700 rounded-lg border border-gray-600 flex items-center px-3 gap-2">
+                                <i class="fa-solid fa-magnifying-glass text-gray-500 text-xs"></i>
+                                <div class="w-20 h-1.5 bg-gray-600 rounded"></div>
+                            </div>
+                        </div>
 
-    <!-- FEATURES SECTION -->
-    <section class="section features-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Fitur Unggulan</h2>
-                <p>Semua yang Anda butuhkan untuk toko online yang profesional.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-palette"></i></div>
-                    <h3>5 Premium Themes</h3>
-                    <p>Ganti tema warna toko dalam hitungan detik. Sesuaikan dengan identitas brand Anda (Gold, Blue, Green, dll).</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div>
-                    <h3>Mobile Friendly</h3>
-                    <p>Tampilan aplikasi yang dioptimalkan untuk layar HP. Pengalaman berbelanja yang mulus untuk pelanggan.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                    <h3>Checkout WhatsApp</h3>
-                    <p>Langsung terhubung ke WA Admin. Pelanggan bisa memesan dan negosiasi langsung dengan mudah.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-tags"></i></div>
-                    <h3>Badges & Label</h3>
-                    <p>Tandai produk "Best Seller" atau "Baru" dengan label otomatis yang menarik perhatian pembeli.</p>
+                        <!-- Product Grid -->
+                        <div class="p-3 grid grid-cols-2 gap-3 overflow-hidden">
+                            <!-- Product 1 -->
+                            <div class="bg-dark-700 rounded-xl p-2 border border-gray-600/50">
+                                <div class="aspect-square bg-dark-600 rounded-lg mb-2 overflow-hidden relative">
+                                    <div class="absolute top-1 right-1 bg-red-500 text-[8px] px-1.5 py-0.5 rounded text-white font-bold">HOT</div>
+                                    <div class="w-full h-full bg-gray-700 flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gray-600"></i>
+                                    </div>
+                                </div>
+                                <div class="w-20 h-2 bg-gray-500 rounded mb-1"></div>
+                                <div class="w-12 h-2 bg-gold-500/50 rounded mb-2"></div>
+                            </div>
+                            <!-- Product 2 -->
+                            <div class="bg-dark-700 rounded-xl p-2 border border-gray-600/50">
+                                <div class="aspect-square bg-dark-600 rounded-lg mb-2 overflow-hidden">
+                                    <div class="w-full h-full bg-gray-700 flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gray-600"></i>
+                                    </div>
+                                </div>
+                                <div class="w-20 h-2 bg-gray-500 rounded mb-1"></div>
+                                <div class="w-12 h-2 bg-gold-500/50 rounded mb-2"></div>
+                            </div>
+                            <!-- Product 3 -->
+                            <div class="bg-dark-700 rounded-xl p-2 border border-gray-600/50">
+                                <div class="aspect-square bg-dark-600 rounded-lg mb-2 overflow-hidden">
+                                    <div class="w-full h-full bg-gray-700 flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gray-600"></i>
+                                    </div>
+                                </div>
+                                <div class="w-20 h-2 bg-gray-500 rounded mb-1"></div>
+                                <div class="w-12 h-2 bg-gold-500/50 rounded mb-2"></div>
+                            </div>
+                            <!-- Product 4 -->
+                            <div class="bg-dark-700 rounded-xl p-2 border border-gray-600/50">
+                                <div class="aspect-square bg-dark-600 rounded-lg mb-2 overflow-hidden">
+                                    <div class="w-full h-full bg-gray-700 flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gray-600"></i>
+                                    </div>
+                                </div>
+                                <div class="w-20 h-2 bg-gray-500 rounded mb-1"></div>
+                                <div class="w-12 h-2 bg-gold-500/50 rounded mb-2"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- THEME DEMO SECTION (Bottom) -->
-    <section class="section theme-demo-section" id="demo">
-        <div class="container">
-            <div class="section-title">
-                <h2>Coba 5 Tema Dark Mode</h2>
-                <p>Klik tombol warna di bawah untuk melihat aplikasi berubah tampilan secara <strong>Real-time</strong>.</p>
+    <!-- Clients / Trust -->
+    <section class="border-y border-white/5 bg-dark-800/30 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-500 text-sm uppercase tracking-widest mb-6">Telah membantu ratusan bisnis untuk berjualan digital</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="text-xl font-bold">Toko Fashion</div>
+                <div class="text-xl font-bold">Kuliner Enak</div>
+                <div class="text-xl font-bold">Gadget Store</div>
+                <div class="text-xl font-bold">Distributor</div>
+                <div class="text-xl font-bold">Reseller</div>
             </div>
-
-            <div class="theme-controls">
-
-                <!-- Gold Button -->
-                <button class="theme-btn active" style="background: #d4af37;" onclick="changeTheme('gold', this)">Gold Elegance</button>
-                
-                <!-- Blue Button -->
-                <button class="theme-btn" style="background: #3b82f6;" onclick="changeTheme('blue', this)">Ocean Blue</button>
-                
-                <!-- Green Button -->
-                <button class="theme-btn" style="background: #10b981;" onclick="changeTheme('green', this)">Forest Green</button>
-                
-                <!-- Pink Button -->
-                <button class="theme-btn" style="background: #ec4899;" onclick="changeTheme('pink', this)">Neon Pink</button>
-                
-                <!-- Purple Button -->
-                <button class="theme-btn" style="background: #8b5cf6;" onclick="changeTheme('purple', this)">Royal Purple</button>
-            </div>
-
-            <!-- Second Mockup (Static/Centered) -->
-            <div class="phone-mockup phone-static">
-                <!-- APP SCREEN COPY -->
-                <div class="app-screen">
-                    <div class="app-nav">
-                        <div class="app-brand">
-                            <h3>Toko Premium</h3>
-                            <span>Belanja Mudah & Cepat</span>
-                        </div>
-                        <button class="app-btn-wa">
-                            <i class="fa-brands fa-whatsapp"></i> Hubungi
-                        </button>
-                    </div>
-
-                    <div class="app-hero">
-                        <h2>Selamat Datang</h2>
-                        <p>Temukan koleksi eksklusif kami.</p>
-                    </div>
-
-                    <div class="app-product-grid">
-                        <!-- Repeating Product Cards for visual consistency -->
-                        <div class="app-card" onclick="toggleModal('appModal2')">
-                            <div class="badge-bs">Best Seller</div>
-                            <div class="card-img-wrap"><img src="https://picsum.photos/seed/sepatu/200/200" alt="Produk"></div>
-                            <div class="card-body"><div class="card-title">Sneakers Urban</div><div class="card-price">Rp 250.000</div></div>
-                        </div>
-                        <div class="app-card" onclick="toggleModal('appModal2')">
-                            <div class="card-img-wrap"><img src="https://picsum.photos/seed/jam/200/200" alt="Produk"></div>
-                            <div class="card-body"><div class="card-title">Jam Tangan Klasik</div><div class="card-price">Rp 150.000</div></div>
-                        </div>
-                        <div class="app-card" onclick="toggleModal('appModal2')">
-                            <div class="card-img-wrap"><img src="https://picsum.photos/seed/tas/200/200" alt="Produk"></div>
-                            <div class="card-body"><div class="card-title">Tas Ransel Kanvas</div><div class="card-price">Rp 185.000</div></div>
-                        </div>
-                        <div class="app-card" onclick="toggleModal('appModal2')">
-                            <div class="badge-bs">Baru</div>
-                            <div class="card-img-wrap"><img src="https://picsum.photos/seed/kacamata/200/200" alt="Produk"></div>
-                            <div class="card-body"><div class="card-title">Kacamata Hitam</div><div class="card-price">Rp 95.000</div></div>
-                        </div>
-                    </div>
-
-                    <div class="app-fab">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <div class="fab-badge">2</div>
-                    </div>
-                    
-                    <!-- Modal for Bottom Phone -->
-                    <div class="app-modal" id="appModal2">
-                        <div class="app-modal-content">
-                            <div class="modal-close" onclick="toggleModal('appModal2')">&times;</div>
-                            <img src="https://picsum.photos/seed/sepatu/400/300" class="modal-img" alt="Detail">
-                            <h3 style="font-size:1.2rem; margin-bottom:5px;">Sneakers Urban</h3>
-                            <p style="font-size:0.8rem; color: #94a3b8; margin-bottom:10px;">Kategori: Sepatu Pria</p>
-                            <h2 style="font-size:1.5rem; color:var(--app-primary); margin-bottom:15px;">Rp 250.000</h2>
-                            <div class="modal-btn">+ Keranjang</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 30px;">
-                <i class="fa-solid fa-hand-pointer"></i> Tips: Coba klik kartu produk di HP untuk melihat detail!
-            </p>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <a href="#" class="footer-logo">Ini<span>Katalogku</span></a>
-                    <p style="max-width: 300px;">Platform pembuat katalog online termudah untuk UMKM Indonesia. Tingkatkan penjualan Anda sekarang.</p>
+    <!-- Problems vs Solutions -->
+    <section id="benefit" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Berhenti Buang Waktu Anda</h2>
+                <p class="text-gray-400">Masalah klasik penjualan online vs solusi cerdas dari IniKatalogku.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Problem Card -->
+                <div class="bg-red-500/5 border border-red-500/20 rounded-2xl p-8 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-xmark text-9xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-red-400 font-bold text-xl mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Cara Lama (Ribet)
+                    </h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-times text-red-500 mt-1"></i>
+                            <span>Share PDF yang butuh waktu lama untuk di-edit.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-times text-red-500 mt-1"></i>
+                            <span>Chat WA panjang lebar mengetik satu-satu harga ke calon buyer.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-times text-red-500 mt-1"></i>
+                            <span>Stok habis tapi lupa update di semua story/katalog.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-times text-red-500 mt-1"></i>
+                            <span>Bayar langganan bulanan yang terus-menerus.</span>
+                        </li>
+                    </ul>
                 </div>
-                <div style="text-align: right; @media(max-width:600px){text-align:center;}">
-                    <h4 style="color:white; margin-bottom:20px;">Menu Cepat</h4>
-                    <ul class="footer-links" style="color:var(--text-muted);">
-                        <li><a href="#">Beranda</a></li>
-                        <li><a href="#demo">Demo Tema</a></li>
-                        <li><a href="#fitur">Fitur</a></li>
-                        <li><a href="#">Kontak</a></li>
+
+                <!-- Solution Card -->
+                <div class="bg-gold-500/5 border border-gold-500/20 rounded-2xl p-8 relative overflow-hidden group shadow-2xl shadow-gold-900/20">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold-500/20 rounded-full blur-3xl group-hover:bg-gold-500/30 transition-all"></div>
+                    <h3 class="text-gold-400 font-bold text-xl mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-check-circle"></i> Cara Baru (IniKatalogku)
+                    </h3>
+                    <ul class="space-y-4 text-gray-200">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-gold-500 mt-1"></i>
+                            <span>1 Klik Share Link. Produk langsung tampil rapi di HP buyer.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-gold-500 mt-1"></i>
+                            <span>Direct Checkout ke WhatsApp. Otomatis format pesanan.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-gold-500 mt-1"></i>
+                            <span>Edit stok/harga di Backoffice, langsung update real-time di katalog.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-gold-500 mt-1"></i>
+                            <span><strong>NO Subscription!</strong> Sekali bayar, pakai selamanya.</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                &copy; 2024 Inikatalogku. All rights reserved.
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-dark-800/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-gold-500 font-bold tracking-wider text-sm uppercase">Fitur Unggulan</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Semua yang Anda Butuhkan</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Real-time Update</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Ubah harga atau stok di dashboard admin, dan katalog pelanggan terupdate dalam hitungan detik tanpa perlu share ulang.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">WA Direct Checkout</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Tombol beli langsung membuka WhatsApp dengan format pesanan yang rapi. Memudahkan CS Anda memproses orderan.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Unlimited Photos</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Upload foto produk sebanyak yang Anda mau. Tampilkan detail produk dari berbagai sudut tanpa batasan kuota.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Best Seller Tag</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Tandai produk andalan Anda dengan label "Best Seller" agar langsung menarik perhatian calon pembeli.</p>
+                </div>
+            </div>
+
+            <!-- More Feature List -->
+            <div class="mt-12 glass-card rounded-2xl p-8 md:p-12">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="fa-solid fa-palette"></i></div>
+                            <div>
+                                <h4 class="font-bold">Custom Branding</h4>
+                                <p class="text-sm text-gray-400">Ganti Logo, Nama Toko, dan Warna Tema sesuai identitas bisnis Anda.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400"><i class="fa-solid fa-layer-group"></i></div>
+                            <div>
+                                <h4 class="font-bold">Kategori Produk</h4>
+                                <p class="text-sm text-gray-400">Kelola ratusan produk dengan sistem kategori agar mudah dicari buyer.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400"><i class="fa-solid fa-mobile-screen"></i></div>
+                            <div>
+                                <h4 class="font-bold">Responsive Design</h4>
+                                <p class="text-sm text-gray-400">Tampilan sempurna di Desktop, Tablet, maupun HP pelanggan.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400"><i class="fa-solid fa-ban"></i></div>
+                            <div>
+                                <h4 class="font-bold">No Monthly Fee</h4>
+                                <p class="text-sm text-gray-400">Tidak ada potongan komisi atau biaya langganan. Hemat biaya operasional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 relative overflow-hidden">
+        <!-- Glow Effect -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gold-500/5 blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Investasi Sekali, <br>Manfaat Selamanya.</h2>
+                <p class="text-gray-400">Dapatkan akses penuh ke Backoffice & Aplikasi Katalog tanpa biaya tersembunyi.</p>
+            </div>
+
+            <div class="flex justify-center">
+                <div class="w-full max-w-lg bg-gradient-to-b from-dark-800 to-dark-900 border border-gold-500/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                    
+                    <!-- Ribbon -->
+                    <div class="absolute top-0 right-0 bg-gold-500 text-dark-900 text-xs font-bold px-4 py-1 rounded-bl-xl z-20">
+                        DISKON SPESIAL
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-2">Lifetime Access</h3>
+                        <p class="text-gray-400 text-sm">Full Aplikasi (Backoffice + Catalog)</p>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-4 mb-8">
+                        <span class="text-2xl md:text-3xl text-gray-500 price-cross">Rp 299.000</span>
+                        <span class="text-4xl md:text-5xl font-extrabold text-gold-500">Rp 99.000</span>
+                    </div>
+
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-check text-green-500"></i> Backoffice Admin Panel
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-check text-green-500"></i> Katalog Produk (untuk Calon Buyer)
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-check text-green-500"></i> Unlimited Produk & Foto
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-check text-green-500"></i> Checkout via WhatsApp Otomatis
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-check text-green-500"></i> Gratis Update Aplikasi
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-check text-green-500"></i> Tanpa Biaya Bulanan
+                        </li>
+                    </ul>
+
+                    <a href="order" target="_blank" class="block w-full bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-dark-900 font-bold text-lg py-4 rounded-xl transition-all transform hover:scale-105 shadow-xl shadow-gold-500/20 text-center relative overflow-hidden group">
+                        <span class="relative z-10">Beli Sekarang & Mulai Jualan</span>
+                        <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:animate-shine"></div>
+                    </a>
+                    <p class="text-center text-xs text-gray-500 mt-4">Pembayaran aman & instant delivery</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-dark-800/30">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl font-bold text-center mb-12">Pertanyaan Umum</h2>
+            
+            <div class="space-y-4">
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah ini aplikasi Android/iOS?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        IniKatalogku berbasis website (Web App). Anda bisa mengakses Backoffice melalui browser di Laptop maupun HP. Untuk pelanggan, katalog bisa dibuka via link di browser HP mereka (seperti membuka website Tokopedia/Shopee).
+                    </p>
+                </details>
+
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah ada biaya langganan bulanan?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        <strong>TIDAK ADA.</strong> Anda hanya membayar sekali di awal untuk mendapatkan lisensi aplikasi. Tidak ada potongan penjualan dan tidak ada biaya bulanan.
+                    </p>
+                </details>
+
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah bisa custom brand?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        Bisa. Anda bisa mengupload logo toko sendiri, mengubah nama toko, tagline, dan memilih warna tema (Gold, Blue, Green, dll) agar sesuai dengan brand bisnis Anda.
+                    </p>
+                </details>
+
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah saya bisa request tampilan custom?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        Sangat bisa. Anda hanya perlu menghubungi kami dan konsultasi dengan kami.
+                    </p>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-dark-900 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-3">
+                    <img src="https://inikatalogku.biz.id/web-app-manifest-192x192.png" alt="Logo" class="w-10 h-10 rounded-xl object-contain bg-white/10 p-1">
+                    <div>
+                        <span class="text-xl font-bold tracking-tight">Ini<span class="text-gold-500">Katalogku</span></span>
+                        <p class="text-xs text-gray-500">Digital Catalog Solution</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://inikatalogku.biz.id" target="_blank" class="text-gray-400 hover:text-white transition-colors">Official Website</a>
+                    <a onclick="chatTertarik()" style="cursor: pointer;" target="_blank" class="text-gray-400 hover:text-white transition-colors">WhatsApp</a>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2026 IniKatalogku. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- Scripts -->
     <script>
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+        }
+            // Fungsi Chat WA dengan Pesan Pre-filled
+        function chatTertarik() {
+            // === PENTING: GANTI NOMOR DI BAWAH INI ===
+            const phoneNumber = "6285117517554"; 
+            
+            // Pesan yang ingin dikirim
+            const message = "Halo Admin, saya tertarik pakai IniKatalogku untuk bisnis saya. Apakah ada diskon spesial hari ini?";
+            
+            // Proses Encoder (Mengubah spasi/karakter khusus menjadi format URL WA)
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Membuka Link WhatsApp
+            const waUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Buka di tab baru
+            window.open(waUrl, '_blank');
+        }
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+                document.getElementById('mobileMenu').classList.remove('flex');
+            });
         });
 
-        // Theme Configuration
-        const THEME_COLORS = {
-            gold:    { primary: '#d4af37', bg: '#121a2e', card: '#1e293b' },
-            blue:    { primary: '#3b82f6', bg: '#0f1725', card: '#1e293b' },
-            green:   { primary: '#10b981', bg: '#0f1a18', card: '#1e293b' },
-            pink:    { primary: '#ec4899', bg: '#1a0f1c', card: '#1e293b' },
-            purple:  { primary: '#8b5cf6', bg: '#170324', card: '#1e293b' }
-        };
-
-        const root = document.documentElement;
-
-        function changeTheme(themeName, btnElement) {
-            // 1. Update Active Button State (Border Logic)
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.classList.remove('active');
-                // Reset transform scale for non-active buttons
-                btn.style.transform = 'scale(1)';
-                btn.style.borderColor = 'transparent';
-            });
-            
-            if(btnElement) {
-                btnElement.classList.add('active');
-                // Border is handled by CSS .theme-btn.active
-            }
-
-            // 2. Get Theme Data
-            const theme = THEME_COLORS[themeName];
-
-            // 3. Apply to CSS Variables (Updates ALL Mockups)
-            root.style.setProperty('--app-primary', theme.primary);
-            root.style.setProperty('--app-bg', theme.bg);
-            root.style.setProperty('--app-card-bg', theme.card);
-
-            // 4. Update Landing Page Accents
-            document.querySelectorAll('.logo span, .feature-icon').forEach(el => {
-                el.style.color = theme.primary;
-            });
-            
-            // Update hover border color for cards
-            const styleSheet = document.createElement("style");
-            styleSheet.innerText = `.app-card:hover, .feature-card:hover { border-color: ${theme.primary} !important; }`;
-            document.head.appendChild(styleSheet);
-        }
-
-        // Initialize Default Theme
-        changeTheme('gold', document.querySelector('.theme-btn.active'));
-
-        // --- Mockup Interaction Logic ---
-        function toggleModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal.classList.contains('active')) {
-                modal.classList.remove('active');
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+                nav.querySelector('.container').classList.add('py-2');
+                nav.querySelector('.container').classList.remove('py-4');
             } else {
-                modal.classList.add('active');
+                nav.classList.remove('shadow-lg');
+                nav.querySelector('.container').classList.remove('py-2');
+                nav.querySelector('.container').classList.add('py-4');
             }
-        }
+        });
     </script>
 </body>
 </html>
