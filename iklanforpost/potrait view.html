@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem & Solusi Broadcast Portrait</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --gold: #d4af37;
+            --danger: #ef4444;
+            --success: #10b981;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #475569; 
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .poster-container {
+            width: 600px;
+            background: var(--bg-dark);
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            border: 1px solid #334155;
+        }
+
+        /* Header */
+        .header {
+            padding: 35px 30px;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid #334155;
+        }
+
+        .badge-top {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+        .highlight-gold { color: var(--gold); }
+
+        /* Problem Section */
+        .section-problem {
+            padding: 30px;
+            background: rgba(239, 68, 68, 0.03);
+            border-bottom: 2px dashed #334155;
+        }
+        .section-label {
+            font-size: 14px;
+            color: var(--danger);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-simulation {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+        }
+        .buyer-msg { display: flex; align-items: flex-start; margin-bottom: 15px; }
+        .buyer-avatar {
+            width: 32px; height: 32px;
+            background: #e2e8f0; border-radius: 50%; margin-right: 10px;
+        }
+        .msg-bubble {
+            background: #f1f5f9; color: #334155;
+            padding: 10px 15px; border-radius: 12px 12px 12px 0;
+            font-size: 14px; font-weight: 500;
+        }
+        .seller-response { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+        .msg-bubble-seller {
+            background: var(--gold); color: #0f172a;
+            padding: 10px 15px; border-radius: 12px 12px 0 12px;
+            font-size: 14px; font-weight: 600; max-width: 80%;
+        }
+        .typing-indicator {
+            font-size: 12px; color: var(--danger);
+            font-weight: 700; margin-top: 5px; text-align: right;
+        }
+
+        /* Solution Section */
+        .section-solution { padding: 30px; background: var(--bg-panel); }
+        .section-label.green { color: var(--gold); }
+        
+        .solution-visual {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px; padding: 25px;
+            display: flex; align-items: center; gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .mockup-phone {
+            width: 90px; height: 160px;
+            background: #000; border: 4px solid #334155;
+            border-radius: 16px; position: relative; flex-shrink: 0;
+            overflow: hidden;
+        }
+        .mockup-screen {
+            width: 90%; height: 100%; background: #0f172a;
+            display: flex; flex-direction: column; padding: 5px;
+        }
+        .mock-line { height: 6px; background: #1e293b; margin-bottom: 6px; border-radius: 3px; }
+        .mock-btn { margin-top: auto; height: 20px; background: var(--gold); border-radius: 4px; width: 100%; }
+
+        .solution-list { list-style: none; padding: 0; margin: 0; }
+        .solution-list li {
+            color: var(--text-main); font-size: 14px; margin-bottom: 10px;
+            display: flex; align-items: flex-start;
+        }
+        .check-icon { color: var(--success); margin-right: 10px; margin-top: 3px; }
+
+        /* Footer with Pricing */
+        .footer-value {
+            padding: 35px;
+            text-align: center;
+            background: radial-gradient(circle at top, #d4af37 0%, #b48818 100%);
+        }
+        .lifetime-text {
+            color: #0f172a; font-size: 16px; font-weight: 800;
+            text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px;
+        }
+        
+        /* Style Harga Coret Baru */
+        .old-price {
+            display: block;
+            font-size: 22px;
+            color: #451a03; /* Coklat gelap agar kontras di background gold */
+            text-decoration: line-through;
+            text-decoration-color: #7c2d12;
+            margin-bottom: 0px;
+            opacity: 0.8;
+        }
+        
+        .price-big {
+            color: #ffffff;
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: 5px;
+        }
+        .price-note {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px; font-weight: 600;
+        }
+        .domain {
+            margin-top: 20px; padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            color: #0f172a; font-weight: 700; font-size: 14px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="poster-container">
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="badge-top"><i class="fa-solid fa-triangle-exclamation"></i> WASPADA</div>
+            <h1>JANGAN BIARKAN BUYER<br>ILFEEL KARENA KATALOGMU <span class="highlight-gold">BERANTAKAN</span></h1>
+        </div>
+
+        <!-- The Problem -->
+        <div class="section-problem">
+            <div class="section-label">
+                <i class="fa-solid fa-xmark"></i> Masalah Klasik
+            </div>
+            <div class="chat-simulation">
+                <div class="buyer-msg">
+                    <div class="buyer-avatar"></div>
+                    <div class="msg-bubble">
+                        Stoknya masih gak kak?
+                        <br><small style="color:#64748b">10:02 AM</small>
+                    </div>
+                </div>
+                <div class="buyer-msg">
+                    <div class="buyer-avatar"></div>
+                    <div class="msg-bubble">
+                        Kirim detail dong, apa saja warnanya?
+                        <br><small style="color:#64748b">10:03 AM</small>
+                    </div>
+                </div>
+                <div class="seller-response">
+                    <div class="msg-bubble-seller">
+                        Iya kak ready.. nanti saya kirim foto satu-satu ya..
+                    </div>
+                </div>
+                <div class="typing-indicator">
+                    <i class="fa-solid fa-spinner fa-spin"></i> WAKTU ANDA TERBUANG HANYA UNTUK NGETIK...
+                </div>
+            </div>
+        </div>
+
+        <!-- The Solution -->
+        <div class="section-solution">
+            <div class="section-label green">
+                <i class="fa-solid fa-check-circle"></i> Solusi Cerdas
+            </div>
+            <div class="solution-visual">
+                <div class="mockup-phone">
+                    <div style="width:40%; height:10px; background:#334155; margin:0 auto; border-radius:0 0 10px 10px;"></div>
+                    <div class="mockup-screen">
+                        <div style="width:100%; height: 20px; background: #d4af37; border-radius: 4px; margin-bottom: 15px;"></div>
+                        <div style="display:flex; gap:5px;"><div class="mock-line" style="width: 50%"></div><div class="mock-line" style="width: 30%"></div></div>
+                        <div class="mock-line" style="width: 80%"></div>
+                        <div class="mock-line" style="width: 60%"></div>
+                        <div class="mock-btn"></div>
+                    </div>
+                </div>
+                <div class="solution-text">
+                    <ul class="solution-list">
+                        <li><i class="fas fa-bolt check-icon"></i> 1 Klik Share. Buyer lihat katalog rapi.</li>
+                        <li><i class="fab fa-whatsapp check-icon"></i> Otomatis Checkout. Pesanan WA rapi.</li>
+                        <li><i class="fas fa-star check-icon"></i> Terlihat Premium. Jualan terpercaya.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-value">
+            <div class="lifetime-text">LIFETIME ACCESS</div>
+            <!-- TAMBAHAN HARGA CORET -->
+            <div class="old-price">Rp 299.000</div>
+            <div class="price-big">Rp 99.000</div>
+            
+            <div class="price-note">Bayar Sekali, Pakai Selamanya. Tanpa Langganan.</div>
+            <div class="domain">inikatalogku.biz.id</div>
+        </div>
+
+    </div>
+
+</body>
+</html>

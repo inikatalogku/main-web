@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landscape Broadcast Image</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --gold: #d4af37;
+            --danger: #ef4444;
+            --success: #10b981;
+            --text-main: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #475569; 
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .poster-container {
+            width: 1000px;
+            height: 560px; /* Rasio landscape standar */
+            background: var(--bg-dark);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            border: 1px solid #334155;
+        }
+
+        /* KIRI: MASALAH (Problem) */
+        .left-panel {
+            width: 50%;
+            background: #1e293b;
+            padding: 40px;
+            border-right: 2px solid #334155;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .problem-title {
+            font-size: 14px;
+            color: var(--danger);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .problem-header {
+            font-size: 28px;
+            font-weight: 800;
+            color: #e2e8f0;
+            line-height: 1.3;
+            margin-bottom: 30px;
+        }
+
+        .chat-bubble-container {
+            position: relative;
+        }
+        
+        .bubble {
+            background: #ffffff;
+            color: #334155;
+            padding: 15px 20px;
+            border-radius: 16px 16px 16px 0;
+            font-size: 15px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            position: relative;
+            max-width: 90%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .bubble small {
+            display: block; color: #94a3b8; font-size: 12px; margin-top: 5px; font-weight: 400;
+        }
+
+        .typing-line {
+            font-size: 13px;
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        /* KANAN: SOLUSI & HARGA */
+        .right-panel {
+            width: 50%;
+            background: linear-gradient(180deg, #0f172a 0%, #162032 100%);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Background Glow Effect */
+        .glow-circle {
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 300px; height: 300px;
+            background: var(--gold);
+            opacity: 0.1;
+            filter: blur(80px);
+            border-radius: 50%;
+        }
+
+        .solution-header {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1.2;
+            margin-bottom: 25px;
+            z-index: 2;
+        }
+        .text-gold { color: var(--gold); }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+            z-index: 2;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        .icon-box {
+            width: 32px; height: 32px;
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold);
+        }
+
+        .price-box {
+            background: var(--gold);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
+            z-index: 2;
+        }
+
+        .price-label {
+            color: #451a03;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .price-strike {
+            color: #78350f;
+            text-decoration: line-through;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .price-final {
+            color: #ffffff;
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .domain-footer {
+            margin-top: 15px;
+            text-align: center;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="poster-container">
+        
+        <!-- KIRI: MASALAH -->
+        <div class="left-panel">
+            <div class="problem-title">Masalah Lama</div>
+            <div class="problem-header">
+                Calon buyer sering kabur<br>karena reply lama?
+            </div>
+            
+            <div class="chat-bubble-container">
+                <div class="bubble">
+                    "Stok ini masih gak kak?"
+                    <small>10:02 AM</small>
+                </div>
+                <div class="bubble">
+                    "Kirim detail warnanya dong, foto satu-satu."
+                    <small>10:05 AM</small>
+                </div>
+                <div class="typing-line">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Waktu habis buat ngetik, bukan closing.
+                </div>
+            </div>
+        </div>
+
+        <!-- KANAN: SOLUSI & HARGA -->
+        <div class="right-panel">
+            <div class="glow-circle"></div>
+
+            <div>
+                <div class="solution-header">
+                    Ubah Chat Ribet<br>Jadi <span class="text-gold">Penjualan Instan</span>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
+                        1 Klik Share Link
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-box"><i class="fa-brands fa-whatsapp"></i></div>
+                        WA Auto Checkout
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-box"><i class="fa-solid fa-rotate"></i></div>
+                        Update Realtime
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-box"><i class="fa-solid fa-ban"></i></div>
+                        No Monthly Fee
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="price-box">
+                    <span class="price-label">LIFETIME ACCESS</span>
+                    <div class="price-strike">Rp 299.000</div>
+                    <div class="price-final">Rp 99.000</div>
+                </div>
+                <div class="domain-footer">inikatalogku.biz.id</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
