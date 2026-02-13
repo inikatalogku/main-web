@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IniKatalogku - Stop Ketik Ulang Harga di WA! Hemat 10 Jam/Minggu</title>
+    
+    <!-- Fonts: Inter for premium clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Config for Brand Colors -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            400: '#FCD34D',
+                            500: '#d4af37',
+                            600: '#B48818',
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'shine': 'shine 2s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #d4af37, #fde68a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glass Effect */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Mobile Mockup CSS Construction */
+        .phone-mockup {
+            border: 12px solid #1e293b;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            background: #0f172a;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 25px;
+            background: #1e293b;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 20;
+        }
+        
+        /* Price Strikethrough Animation */
+        .price-cross {
+            position: relative;
+            display: inline-block;
+        }
+        .price-cross::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ef4444;
+            transform: rotate(-5deg);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-white font-sans antialiased overflow-x-hidden selection:bg-gold-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-dark-900/80 backdrop-blur-md border-b border-white/5"></div>
+        <div class="container mx-auto px-6 py-4 relative flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="https://inikatalogku.biz.id/web-app-manifest-192x192.png" alt="Logo" class="w-10 h-10 rounded-xl object-contain bg-white/10 p-1">
+                <span class="text-xl font-bold tracking-tight">Ini<span class="text-gold-500">Katalogku</span></span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#cara-kerja" class="hover:text-gold-400 transition-colors">Cara Kerja</a>
+                <!-- <a href="#testimoni" class="hover:text-gold-400 transition-colors">Testimoni</a> -->
+                <a href="#fitur" class="hover:text-gold-400 transition-colors">Fitur</a>
+                <a href="#harga" class="hover:text-gold-400 transition-colors">Harga</a>
+            </div>
+
+            <a href="regtrial" class="hidden md:block bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-dark-900 font-bold px-6 py-2.5 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-gold-500/20">
+                <i class="fa-regular fa-clock mr-1"></i> Coba Gratis Sekarang
+            </a>
+
+            <button class="md:hidden text-white text-xl" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-dark-800 border-b border-white/10 p-4 flex-col gap-4 shadow-2xl">
+            <a href="#cara-kerja" class="block text-gray-300 hover:text-gold-400">Cara Kerja</a>
+            <a href="#testimoni" class="block text-gray-300 hover:text-gold-400">Testimoni</a>
+            <a href="#fitur" class="block text-gray-300 hover:text-gold-400">Fitur</a>
+            <a href="regtrial" class="block text-center bg-gold-500 text-dark-900 font-bold py-3 rounded-xl">
+                <i class="fa-regular fa-clock mr-1"></i> Coba Gratis
+            </a>
+            <a href="order" class="block text-center border border-gold-500/50 text-gold-400 font-medium py-3 rounded-xl">
+                <i class="fa-solid fa-bolt mr-1"></i> Beli Langsung
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <!-- Text Content -->
+            <div class="text-center lg:text-left space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs font-bold uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></span>
+                    Hemat 10 Jam/Minggu — Tanpa Ribet
+                </div>
+                <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight">
+                    Stop Ketik Ulang Harga di WA!
+                    <br>
+                    <span class="text-gradient">Katalog Digital Otomatis</span> untuk Seller UMKM
+                </h1>
+                <p class="text-gray-400 text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Dulu 2-3 jam/hari habis hanya untuk jawab "harga berapa?" di WA. Sekarang, buyer langsung klik "Beli" → otomatis buka WhatsApp dengan format pesanan lengkap. Tanpa edit PDF. Tanpa ketik manual.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
+                    <a href="regtrial" class="w-full sm:w-auto px-8 py-4 bg-gold-500 hover:bg-gold-400 text-dark-900 font-bold text-lg rounded-xl transition-all transform hover:-translate-y-1 shadow-lg shadow-gold-500/30 flex items-center justify-center gap-2 group">
+                        <i class="fa-regular fa-clock mr-2"></i> Coba Gratis<i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <!-- <a href="order" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-gray-500 hover:border-gold-500 hover:text-gold-400 text-white font-medium text-lg rounded-xl transition-all flex items-center justify-center gap-2 group">
+                        <i class="fa-solid fa-bolt text-gold-500 group-hover:scale-110 transition-transform mr-2"></i>
+                        Beli Langsung Rp 99rb
+                    </a> -->
+                </div>
+                <p class="text-xs text-gray-500 mt-4">
+                    <i class="fas fa-forward text-green-400 mr-1"></i> Setup 15 menit | <i class="fa-solid fa-code text-blue-400 mr-1"></i> Tanpa Coding | <i class="fa-solid fa-money-bill-wave text-green-400 mr-1"></i> Garansi 30 Hari Uang Kembali
+                </p>
+            </div>
+
+            <!-- Visual Content (CSS Mockup with NEW UI) -->
+            <div class="relative flex justify-center lg:justify-end animate-float">
+                <div class="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-blue-500/20 blur-3xl rounded-full"></div>
+                
+                <div class="phone-mockup w-[300px] h-[600px] shadow-2xl relative z-20 border-4 border-slate-700">
+                    <div class="phone-notch"></div>
+                    
+                    <!-- Screen Content -->
+                    <div class="w-full h-full bg-dark-800 overflow-hidden flex flex-col pt-8 relative">
+                        
+                        <!-- Background Layer (Skeletal Grid) - Dimmed to make overlay pop -->
+                        <div class="absolute inset-0 z-0 pt-24 px-3 opacity-30 pointer-events-none transition-opacity duration-300">
+                            <div class="grid grid-cols-2 gap-3">
+                                <!-- Skeleton Products -->
+                                <div class="bg-dark-700 rounded-xl h-40"></div>
+                                <div class="bg-dark-700 rounded-xl h-40"></div>
+                                <div class="bg-dark-700 rounded-xl h-40"></div>
+                                <div class="bg-dark-700 rounded-xl h-40"></div>
+                            </div>
+                        </div>
+
+                        <!-- UI Header Layer -->
+                        <div class="relative z-10 px-4 pb-4 border-b border-gray-700 flex justify-between items-center bg-dark-900">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gold-500 rounded-md"></div>
+                                <div class="flex flex-col">
+                                    <div class="w-24 h-2.5 bg-gray-600 rounded"></div>
+                                    <div class="w-16 h-1.5 bg-gray-700 rounded mt-1"></div>
+                                </div>
+                            </div>
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-[10px] text-white">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- UI Search Bar Layer -->
+                        <div class="relative z-10 px-4 py-3">
+                            <div class="w-full h-8 bg-dark-700 rounded-lg border border-gray-600 flex items-center px-3 gap-2">
+                                <i class="fa-solid fa-magnifying-glass text-gray-500 text-xs"></i>
+                                <div class="w-20 h-1.5 bg-gray-600 rounded"></div>
+                            </div>
+                        </div>
+
+                        <!-- NEW UI: Central Overlay Card (The Better UX) -->
+                        <div class="absolute inset-0 z-40 flex items-center justify-center p-6 bg-gradient-to-b from-dark-900/80 via-dark-900/60 to-dark-900/90 backdrop-blur-[2px]">
+                            <div class="bg-dark-800/90 backdrop-blur-xl border border-gray-600/50 p-5 rounded-2xl shadow-2xl text-center w-full transform transition-all hover:scale-105 duration-300 group">
+                                
+                                <!-- Icon Container -->
+                                <div class="relative inline-block mb-4">
+                                    <div class="absolute inset-0 bg-gold-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                                    <div class="relative w-14 h-14 bg-gradient-to-br from-gold-500 to-gold-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-gold-500/20">
+                                        <i class="fa-solid fa-play text-white text-xl pl-1"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Text Content -->
+                                <h3 class="text-white font-bold text-lg mb-1 leading-tight">Lihat Demo Live</h3>
+                                <p class="text-gray-400 text-xs mb-5 leading-relaxed">
+                                    Rasakan pengalaman jualan yang rapi & otomatis.
+                                </p>
+
+                                <!-- Interactive Button -->
+                                <a href="tokosaya" class="block w-full bg-white text-dark-900 font-bold text-sm py-3 rounded-xl hover:bg-gold-500 hover:text-white transition-colors shadow-lg relative overflow-hidden">
+                                    <span class="relative z-10">Buka Katalog Demo</span>
+                                </a>
+
+                                <!-- Subtle Footer Text -->
+                                <p class="text-[10px] text-gray-500 mt-3 uppercase tracking-widest font-semibold">
+                                    Interaktif • Realtime
+                                </p>
+                            </div>
+                        </div>
+                        <!-- End of Overlay -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Testimoni -->
+    <!-- <section id="testimoni" class="py-16 bg-dark-800/50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs font-bold uppercase tracking-wider mx-auto mb-4">
+                    <i class="fa-solid fa-star"></i>
+                    <span>4.9/5 dari 1.247+ Seller UMKM</span>
+                </div>
+                <h2 class="text-3xl font-bold">Mereka Sudah Hemat 10+ Jam/Minggu</h2>
+                <p class="text-gray-400 mt-2">Dari kuliner, fashion, hingga gadget — IniKatalogku dipercaya seller di 34 provinsi</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+
+                <div class="glass-card rounded-2xl p-6 border border-gold-500/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center text-white font-bold text-lg">
+                            S
+                        </div>
+                        <div>
+                            <div class="flex gap-1 text-gold-400">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-sm text-gray-400">Owner @TasImportJogja</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-gray-300 italic text-sm leading-relaxed border-l-4 border-gold-500 pl-4 py-2">
+                        "Dulu 2 jam/hari habis hanya untuk jawab 'harga berapa?'. Sekarang buyer langsung klik 'Beli' → otomatis buka WA dengan format pesanan lengkap. Orderan naik 40% dalam 2 minggu!"
+                    </blockquote>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 border border-gold-500/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg">
+                            B
+                        </div>
+                        <div>
+                            <div class="flex gap-1 text-gold-400">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-sm text-gray-400">Owner @BaksoPakJaya</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-gray-300 italic text-sm leading-relaxed border-l-4 border-gold-500 pl-4 py-2">
+                        "PDF katalog saya sering ketinggalan update harga. Sekarang pakai IniKatalogku, edit sekali di backoffice langsung update di semua link. Hemat waktu 8 jam/minggu!"
+                    </blockquote>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 border border-gold-500/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white font-bold text-lg">
+                            R
+                        </div>
+                        <div>
+                            <div class="flex gap-1 text-gold-400">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-sm text-gray-400">Owner @RumahGadgetID</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-gray-300 italic text-sm leading-relaxed border-l-4 border-gold-500 pl-4 py-2">
+                        "Stok habis tapi lupa update di WA story? Pernah rugi jutaan. Sekarang stok otomatis terupdate real-time. CS saya jadi lebih fokus follow-up buyer, bukan update harga."
+                    </blockquote>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 border border-gold-500/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                            A
+                        </div>
+                        <div>
+                            <div class="flex gap-1 text-gold-400">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-sm text-gray-400">Owner @AksesorisMuslimah</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-gray-300 italic text-sm leading-relaxed border-l-4 border-gold-500 pl-4 py-2">
+                        "Dulu pakai aplikasi berbayar bulanan, tiap bulan harus bayar lagi. Sekarang sekali bayar Rp 99rb, pakai selamanya. Uangnya bisa buat beli stok produk baru!"
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <p class="text-gray-400 text-sm">
+                    <span class="text-gold-400 font-bold"><i class="fa-solid fa-users mr-1"></i> 1.247+</span> seller UMKM di 34 provinsi sudah beralih ke IniKatalogku
+                </p>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Cara Kerja Section -->
+    <section id="cara-kerja" class="py-20 bg-dark-800/30">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-gold-500 font-bold tracking-wider text-sm uppercase">Mudah Dipakai</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">3 Langkah Mulai Jualan Lebih Cepat</h2>
+                <p class="text-gray-400 mt-4">Tidak perlu coding. Setup 15 menit, langsung jualan.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Step 1 -->
+                <div class="text-center p-6 glass-card rounded-2xl relative border-2 border-transparent hover:border-gold-500/50 transition-all">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gold-500 flex items-center justify-center text-dark-900 font-bold text-lg z-10">1</div>
+                    <div class="mt-6 mb-4">
+                        <div class="w-16 h-16 mx-auto bg-gold-500/10 rounded-2xl flex items-center justify-center text-gold-400 text-2xl">
+                            <i class="fa-solid fa-laptop"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Upload Produk di Backoffice</h3>
+                    <p class="text-gray-400 text-sm">Isi nama, harga, stok, upload foto. Bisa bulk upload via Excel untuk hemat waktu.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center p-6 glass-card rounded-2xl relative border-2 border-transparent hover:border-gold-500/50 transition-all">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gold-500 flex items-center justify-center text-dark-900 font-bold text-lg z-10">2</div>
+                    <div class="mt-6 mb-4">
+                        <div class="w-16 h-16 mx-auto bg-gold-500/10 rounded-2xl flex items-center justify-center text-gold-400 text-2xl">
+                            <i class="fa-solid fa-link"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Share Link ke Buyer</h3>
+                    <p class="text-gray-400 text-sm">Kirim link katalog via WA, IG Story, atau TikTok. Buyer buka di HP mereka — tampilan rapi & profesional.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center p-6 glass-card rounded-2xl relative border-2 border-transparent hover:border-gold-500/50 transition-all">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gold-500 flex items-center justify-center text-dark-900 font-bold text-lg z-10">3</div>
+                    <div class="mt-6 mb-4">
+                        <div class="w-16 h-16 mx-auto bg-gold-500/10 rounded-2xl flex items-center justify-center text-gold-400 text-2xl">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Terima Pesanan Otomatis</h3>
+                    <p class="text-gray-400 text-sm">Buyer klik "Beli" → langsung buka WA dengan format pesanan rapi. CS Anda tinggal konfirmasi!</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="regtrial" class="inline-block bg-gold-500 hover:bg-gold-400 text-dark-900 font-bold px-8 py-4 rounded-xl text-lg shadow-lg shadow-gold-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-clock mr-2"></i> Coba Gratis Sekarang
+                </a>
+                <p class="text-gray-500 text-sm mt-3">
+                    <i class="fa-solid fa-forward text-green-400 mr-1"></i> Setup 15 menit | <i class="fa-solid fa-code text-blue-400 mr-1"></i> Tanpa Coding
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before-After Visual Storytelling -->
+    <section class="py-20">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-16">
+                <span class="text-red-400 font-bold tracking-wider text-sm uppercase">Perbandingan Nyata</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Dari Ribet ke Rapi — dalam 1 Klik</h2>
+                <p class="text-gray-400 mt-4">Lihat perbedaan cara lama vs cara baru IniKatalogku</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- BEFORE -->
+                <div class="border border-red-500/30 rounded-2xl p-6 bg-red-500/5 relative overflow-hidden group">
+                    <div class="absolute top-3 right-3 bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded">
+                        CARA LAMA (RIBET)
+                    </div>
+                    <div class="space-y-4 mt-6">
+                        <div class="bg-dark-700 rounded-lg p-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 flex-shrink-0">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div class="bg-dark-600 rounded-lg p-3 w-full">
+                                    <p class="text-sm text-gray-300">Harga brp ya sist?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-dark-700 rounded-lg p-4">
+                            <div class="flex items-start gap-3 justify-end">
+                                <div class="bg-dark-600 rounded-lg p-3 w-full">
+                                    <p class="text-sm text-gray-300">Harganya bervarian tergantung size & warnanya, Sis. Tapi tenang aja, khusus pembelian hari ini kita lagi ada Potongan Harga/Promo Bundling lho! 😍</p>
+                                    <p class="text-sm text-gray-300">Kakak mau lihat daftar harga lengkapnya atau mau aku kirimin foto detail produk yang best seller?</p>
+                                    <!-- <div class="mt-2 flex gap-2">
+                                        <div class="w-16 h-6 bg-gray-700 rounded animate-pulse"></div>
+                                        <div class="w-16 h-6 bg-gray-700 rounded animate-pulse delay-200"></div>
+                                    </div> -->
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-dark-700 rounded-lg p-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 flex-shrink-0">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div class="bg-dark-600 rounded-lg p-3 w-full">
+                                    <p class="text-sm text-gray-300">Udah ada stok warna biru?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center py-4 bg-red-500/10 rounded-lg border border-red-500/30">
+                            <div class="text-red-400 font-bold text-2xl">22 menit</div>
+                            <div class="text-gray-400 text-sm">untuk 1 buyer</div>
+                            <div class="text-xs text-red-400 mt-2">
+                                <i class="fa-solid fa-clock"></i> 2 jam/hari habis untuk chat manual
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AFTER -->
+                <div class="border border-gold-500/30 rounded-2xl p-6 bg-gold-500/5 relative overflow-hidden group shadow-2xl shadow-gold-900/20">
+                    <div class="absolute top-3 right-3 bg-gold-500/20 text-gold-400 text-xs font-bold px-2 py-1 rounded">
+                        CARA BARU (INIKATALOGKU)
+                    </div>
+                    <div class="space-y-4 mt-6">
+                        <div class="bg-dark-700 rounded-lg p-4 text-center">
+                            <div class="text-green-400 text-5xl mb-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <p class="text-gray-300 text-sm">Buyer buka link katalog → klik produk → klik "Beli"</p>
+                        </div>
+                        <div class="bg-dark-700 rounded-lg p-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 flex-shrink-0">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div class="bg-dark-600 rounded-lg p-3 w-full">
+                                    <p class="text-sm text-gray-300 font-mono text-xs">
+                                        Halo @TokoSaya, saya mau pesan:<br>
+                                        • Tas Import A01 (Hitam) x2 = Rp 300.000<br>
+                                        • Total: Rp 300.000<br>
+                                        <span class="text-gold-400">#IniKatalogku</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-dark-700 rounded-lg p-4 text-center">
+                            <div class="text-green-400 text-5xl mb-2">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <p class="text-gray-300 text-sm">CS tinggal konfirmasi & proses order!</p>
+                        </div>
+                        <div class="text-center py-4 bg-green-500/10 rounded-lg border border-green-500/30">
+                            <div class="text-green-400 font-bold text-2xl">47 detik</div>
+                            <div class="text-gray-400 text-sm">untuk 1 buyer</div>
+                            <div class="text-xs text-green-400 mt-2">
+                                <i class="fa-solid fa-clock"></i> Hemat 96% waktu chat manual
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="fitur" class="py-20 bg-dark-800/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-gold-500 font-bold tracking-wider text-sm uppercase">Fitur Unggulan</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Semua yang Anda Butuhkan untuk Jualan Lebih Cepat</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300 border border-transparent hover:border-gold-500/30">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Update Sekali, Langsung Tersebar</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Edit harga atau stok di backoffice, langsung update real-time di katalog buyer. Tidak perlu share ulang link!</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300 border border-transparent hover:border-gold-500/30">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Format Pesanan Otomatis ke WA</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Buyer klik "Beli" → langsung buka WhatsApp dengan format pesanan rapi. CS Anda tidak perlu ketik manual lagi!</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300 border border-transparent hover:border-gold-500/30">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Upload Foto Sebanyak-Banyaknya</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Tampilkan produk dari berbagai sudut. Upload foto tanpa batas — tidak ada kuota bulanan yang bikin pusing.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-card p-6 rounded-2xl hover:bg-dark-700 transition-all group hover:-translate-y-2 duration-300 border border-transparent hover:border-gold-500/30">
+                    <div class="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 text-2xl mb-4 group-hover:bg-gold-500 group-hover:text-dark-900 transition-colors">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Label "Best Seller" Otomatis</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Tandai produk andalan Anda agar langsung menarik perhatian buyer. Tingkatkan penjualan produk unggulan!</p>
+                </div>
+            </div>
+
+            <!-- More Feature List -->
+            <div class="mt-12 glass-card rounded-2xl p-8 md:p-12">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 p-3 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="fa-solid fa-palette"></i></div>
+                            <div>
+                                <h4 class="font-bold">Custom Branding</h4>
+                                <p class="text-sm text-gray-400">Upload logo toko, ganti nama & warna tema sesuai brand bisnis Anda. Tampil profesional!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 p-3 rounded-full bg-green-500/20 flex items-center justify-center text-green-400"><i class="fa-solid fa-layer-group"></i></div>
+                            <div>
+                                <h4 class="font-bold">Kategori Produk Rapi</h4>
+                                <p class="text-sm text-gray-400">Kelola ratusan produk dengan sistem kategori. Buyer mudah cari produk yang mereka mau!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 p-3 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400"><i class="fa-solid fa-mobile-screen"></i></div>
+                            <div>
+                                <h4 class="font-bold">Tampilan Sempurna di Semua HP</h4>
+                                <p class="text-sm text-gray-400">Katalog otomatis menyesuaikan layar HP buyer. Tidak ada yang kecil atau berantakan!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 p-3 rounded-full bg-red-500/20 flex items-center justify-center text-red-400"><i class="fa-solid fa-ban"></i></div>
+                            <div>
+                                <h4 class="font-bold">Tanpa Biaya Bulanan Selamanya!</h4>
+                                <p class="text-sm text-gray-400">Bayar sekali, pakai selamanya. Tidak ada potongan komisi. Tidak ada tagihan bulanan!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 p-3 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400"><i class="fa-solid fa-file-excel"></i></div>
+                            <div>
+                                <h4 class="font-bold">Bulk Upload via Excel</h4>
+                                <p class="text-sm text-gray-400">Punya 100+ produk? Upload sekaligus pakai Excel. Hemat waktu berjam-jam!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 p-3 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400"><i class="fa-solid fa-headset"></i></div>
+                            <div>
+                                <h4 class="font-bold">Gratis Update & Support</h4>
+                                <p class="text-sm text-gray-400">Dapatkan update fitur terbaru & bantuan teknis tanpa biaya tambahan. Kami siap membantu!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="harga" class="py-24 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gold-500/5 blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Bayar Sekali, <br>Hemat Selamanya.</h2>
+                <p class="text-gray-400">Dibanding bayar langganan bulanan terus-menerus, lebih baik investasi sekali untuk selamanya!</p>
+            </div>
+
+            <div class="flex justify-center">
+                <div class="w-full max-w-lg bg-gradient-to-b from-dark-800 to-dark-900 border border-gold-500/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                    
+                    <div class="absolute top-0 right-0 bg-gold-500 text-dark-900 text-xs font-bold px-4 py-1 rounded-bl-xl z-20">
+                        <i class="fa-solid fa-fire mr-1"></i> HEMAT 67% — DISKON SPESIAL!
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-2">Lifetime Access</h3>
+                        <p class="text-gray-400 text-sm">Full Aplikasi (Backoffice + Katalog)</p>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 mb-8 text-center">
+                        <span class="text-xl md:text-2xl text-gray-500 line-through opacity-70">
+                            Rp 299.000
+                        </span>
+                        
+                        <span class="text-4xl md:text-5xl font-extrabold text-yellow-500 tracking-tight drop-shadow-sm">
+                            Rp 99.000
+                        </span>
+                    </div>
+
+                    <div class="bg-green-500/10 border border-green-500/30 rounded-xl p-4 mb-8">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-shield-check text-green-400 text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-green-300 text-sm">Garansi 30 Hari Uang Kembali</h4>
+                                <p class="text-xs text-gray-300 mt-1">
+                                    Jika dalam 30 hari IniKatalogku TIDAK menghemat waktu Anda minimal 5 jam/minggu, kami kembalikan 100% uang Anda. Tanpa pertanyaan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-6 mb-8">
+                        <li class="flex items-start gap-4 group">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center mt-0.5">
+                                <i class="fa-solid fa-check text-green-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1">Backoffice Admin Panel</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">Kelola semua produk dari 1 dashboard yang mudah digunakan.</p>
+                            </div>
+                        </li>
+                    
+                        <li class="flex items-start gap-4 group">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center mt-0.5">
+                                <i class="fa-solid fa-check text-green-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1">Katalog Digital</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">Tampilan rapi di HP buyer, persis seperti aplikasi Marketplace.</p>
+                            </div>
+                        </li>
+                    
+                        <li class="flex items-start gap-4 group">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center mt-0.5">
+                                <i class="fa-solid fa-check text-green-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1">Unlimited Produk & Foto</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">Upload sebanyak yang Anda mau, tanpa kuota penyimpanan.</p>
+                            </div>
+                        </li>
+                    
+                        <li class="flex items-start gap-4 group">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center mt-0.5">
+                                <i class="fa-solid fa-check text-green-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1">Checkout Otomatis ke WhatsApp</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">Format pesanan rapi, CS tidak perlu repot ketik manual.</p>
+                            </div>
+                        </li>
+                    
+                        <li class="flex items-start gap-4 group">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center mt-0.5">
+                                <i class="fa-solid fa-check text-green-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1">Update Real-time</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">Edit sekali di admin, langsung update di semua link katalog.</p>
+                            </div>
+                        </li>
+                    
+                        <li class="flex items-start gap-4 p-3 rounded-lg bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mt-0.5">
+                                <i class="fa-solid fa-check text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-green-400 font-bold mb-1">Tanpa Biaya Bulanan</h3>
+                                <p class="text-gray-300 text-sm leading-relaxed">Sekali bayar, pakai selamanya. Hemat jutaan rupiah per tahun!</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- <div class="bg-gold-500/10 border border-gold-500/30 rounded-xl p-4 mb-6">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-gift text-gold-400"></i>
+                            <span class="text-sm text-gray-300">
+                                <strong class="text-gold-400">BONUS:</strong> Template Excel Stok + Video Tutorial Optimasi WA (senilai Rp 150.000) — GRATIS!
+                            </span>
+                        </div>
+                    </div> -->
+
+                    <a href="regtrial" class="block w-full bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-dark-900 font-bold text-lg py-4 rounded-xl transition-all transform hover:scale-105 shadow-xl shadow-gold-500/20 text-center relative overflow-hidden group mb-4">
+                        <span class="relative z-10"><i class="fa-regular fa-clock mr-2"></i> Coba Gratis Sekarang</span>
+                        <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:animate-shine"></div>
+                    </a>
+
+                    <div class="text-center py-4">
+                        <p class="text-gray-500 text-sm mb-2">Atau langsung beli tanpa trial:</p>
+                        <a href="order" class="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 font-medium transition-colors group">
+                            <i class="fa-solid fa-bolt text-gold-500 group-hover:scale-110 transition-transform"></i>
+                            <span class="underline">Beli Langsung Sekarang</span>
+                            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                    
+                    <p class="text-xs text-gray-500 text-center mt-4">
+                        <i class="fa-solid fa-lightbulb text-yellow-400 mr-1"></i> Dibanding bayar langganan Rp 50rb/bulan (Rp 600rb/tahun), Anda hemat <strong class="text-gold-400">Rp 501.000</strong> di tahun pertama!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-dark-800/30">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="text-center mb-12">
+                <span class="text-gold-500 font-bold tracking-wider text-sm uppercase">Pertanyaan Umum</span>
+                <h2 class="text-3xl font-bold mt-2">Jawaban Jujur yang Anda Butuhkan</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah ini aplikasi Android/iOS yang harus di-download?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        Tidak perlu download! IniKatalogku berbasis website (Web App). Anda bisa akses Backoffice melalui browser di Laptop atau HP. Untuk buyer, mereka cukup buka link katalog di browser HP mereka — seperti membuka website Marketplace dan E-commerce lainnya. Praktis dan tidak memakan memori HP!
+                    </p>
+                </details>
+
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah ada biaya langganan bulanan atau potongan komisi?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        <strong>TIDAK ADA — SELAMANYA!</strong> Anda hanya bayar sekali di awal untuk mendapatkan lisensi lifetime. Tidak ada biaya bulanan, tidak ada potongan penjualan, tidak ada tagihan mendadak. Bandingkan dengan aplikasi lain yang bayar Rp 50rb-100rb/bulan — dalam 1 tahun Anda sudah keluar Rp 600rb-1,2jt! Dengan IniKatalogku, Anda hemat ratusan ribu bahkan jutaan rupiah.
+                    </p>
+                </details>
+
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Bagaimana cara kerja Trial 14 Hari? Apakah butuh kartu kredit?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        Sangat mudah! Anda tinggal daftar akun (pakai email biasa), langsung dapat akses full ke semua fitur premium selama 14 hari — <strong>tanpa kartu kredit, tanpa bayar di awal</strong>. Coba upload produk, share link ke teman, test checkout ke WhatsApp. Jika cocok, tinggal upgrade ke lifetime access. Jika tidak cocok, akun otomatis nonaktif setelah 14 hari — tanpa kewajiban bayar sama sekali. Zero risk!
+                    </p>
+                </details>
+
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah saya bisa custom tampilan sesuai brand toko saya?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        Tentu bisa! Di backoffice, Anda bisa:
+                        <br><i class="fa-solid fa-circle-check text-gold-400 mr-2"></i> Upload logo toko Anda sendiri
+                        <br><i class="fa-solid fa-circle-check text-gold-400 mr-2"></i> Ganti nama toko & tagline
+                        <br><i class="fa-solid fa-circle-check text-gold-400 mr-2"></i> Pilih warna tema (Gold, Biru, Hijau, Merah, dll)
+                        <!-- <br><i class="fa-solid fa-circle-check text-gold-400 mr-2"></i> Atur deskripsi toko -->
+                        <br><br>
+                        Katalog Anda akan tampil profesional dengan identitas brand sendiri — tidak seperti pakai template generik!
+                    </p>
+                </details>
+
+                <!-- <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Bagaimana jika saya punya 100+ produk? Apakah bisa upload cepat?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        Bisa banget! Kami menyediakan fitur <strong>Bulk Upload via Excel</strong>. Anda tinggal download template Excel kami, isi data produk (nama, harga, stok, kategori), lalu upload sekali klik. 100 produk bisa masuk dalam 2 menit — tidak perlu input manual satu-satu. Hemat waktu berjam-jam!
+                    </p>
+                </details>
+
+                <details class="glass-card rounded-xl p-4 group cursor-pointer open:bg-gold-500/5 transition-all">
+                    <summary class="font-semibold text-lg flex justify-between items-center list-none">
+                        Apakah ada bantuan jika saya kesulitan setup?
+                        <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gold-500"></i></span>
+                    </summary>
+                    <p class="mt-3 text-gray-400 leading-relaxed text-sm">
+                        Tentu! Kami menyediakan:
+                        <br><i class="fa-solid fa-circle-check text-blue-400 mr-2"></i> <strong>Video tutorial lengkap</strong> step-by-step (bahasa Indonesia)
+                        <br><i class="fa-solid fa-circle-check text-blue-400 mr-2"></i> <strong>WhatsApp support</strong> langsung dengan tim kami
+                        <br><i class="fa-solid fa-circle-check text-blue-400 mr-2"></i> <strong>Template Excel</strong> untuk bulk upload produk
+                        <br><i class="fa-solid fa-circle-check text-blue-400 mr-2"></i> <strong>FAQ lengkap</strong> di dashboard
+                        <br><br>
+                        Anda tidak akan sendirian. Kami siap membantu sampai toko online Anda berjalan lancar!
+                    </p>
+                </details> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-dark-900 to-gold-500/10">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="glass-card rounded-3xl p-8 md:p-12 text-center border border-gold-500/30">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs font-bold uppercase tracking-wider mb-6 mx-auto">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Penawaran Spesial Hari Ini</span>
+                </div>
+                
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Stop Buang Waktu untuk Hal yang Bisa Otomatis!
+                </h2>
+                
+                <p class="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+                    Coba gratis 14 hari tanpa kartu kredit. Jika cocok, upgrade ke lifetime access.
+                    <br class="hidden md:block">
+                    Zero risk. Full benefit!
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <a href="regtrial" class="w-full sm:w-auto px-8 py-4 bg-gold-500 hover:bg-gold-400 text-dark-900 font-bold text-lg rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-gold-500/30 flex items-center justify-center gap-2 group">
+                        <i class="fa-regular fa-clock mr-2"></i>
+                        Coba Gratis Sekarang
+                    </a>
+                    <a href="order" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-gold-500 hover:bg-gold-500/10 text-white font-medium text-lg rounded-xl transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bolt mr-2"></i>
+                        Beli Langsung
+                    </a>
+                </div>
+                
+                <div class="bg-dark-800/50 border border-gold-500/20 rounded-xl p-4 max-w-2xl mx-auto">
+                    <div class="flex items-start gap-3">
+                        <i class="fa-solid fa-shield-check text-green-400 text-xl mt-1"></i>
+                        <div class="text-left">
+                            <p class="text-sm text-gray-300">
+                                <strong class="text-green-400">Garansi 30 Hari Uang Kembali</strong>
+                                <br>
+                                Jika IniKatalogku tidak menghemat waktu Anda minimal 5 jam/minggu, kami kembalikan 100% uang Anda. Tanpa drama.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-xs text-gray-500 mt-6">
+                    <i class="fa-solid fa-check-circle text-green-400 mr-2"></i> Setup 15 menit | <i class="fa-solid fa-code text-blue-400 mr-2"></i> Tanpa Coding | <i class="fa-brands fa-whatsapp text-green-400 mr-2"></i> Support WhatsApp | <i class="fa-solid fa-sync text-purple-400 mr-2"></i> Update Gratis Selamanya
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-dark-900 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-3">
+                    <img src="https://inikatalogku.biz.id/web-app-manifest-192x192.png" alt="Logo" class="w-10 h-10 rounded-xl object-contain bg-white/10 p-1">
+                    <div>
+                        <span class="text-xl font-bold tracking-tight">Ini<span class="text-gold-500">Katalogku</span></span>
+                        <p class="text-xs text-gray-500">Digital Catalog Solution untuk Seller UMKM</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://inikatalogku.biz.id" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa-solid fa-globe mr-1"></i> Official Website
+                    </a>
+                    <a onclick="chatTertarik()" style="cursor: pointer;" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Kami
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 text-center">
+                <!-- <p class="text-gray-500 text-sm mb-2">
+                    <i class="fa-solid fa-check-circle text-green-500 mr-2"></i>
+                    Sudah dipercaya oleh <strong class="text-gold-400">1.247+ seller UMKM</strong> di 34 provinsi Indonesia
+                </p> -->
+                <p class="text-gray-500 text-sm">&copy; 2026 IniKatalogku. All rights reserved.</p>
+                <p class="text-gray-500 text-sm">Produced by Tata Umkm — Solusi Digital untuk UMKM Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+        }
+        
+        // Fungsi Chat WA dengan Pesan Pre-filled
+        function chatTertarik() {
+            const phoneNumber = "6285117517554"; 
+            const message = "Halo Admin, saya tertarik pakai IniKatalogku untuk bisnis saya. Apakah ada diskon spesial hari ini?";
+            const encodedMessage = encodeURIComponent(message);
+            const waUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            window.open(waUrl, '_blank');
+        }
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+                document.getElementById('mobileMenu').classList.remove('flex');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+                nav.querySelector('.container').classList.add('py-2');
+                nav.querySelector('.container').classList.remove('py-4');
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.querySelector('.container').classList.remove('py-2');
+                nav.querySelector('.container').classList.add('py-4');
+            }
+        });
+    </script>
+</body>
+</html>
