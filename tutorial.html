@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial Penggunaan - IniKatalogku</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: { dark: '#0f172a', card: '#1e293b' },
+            primary: '#d4af37',
+            text: { main: '#f8fafc', muted: '#94a3b8' },
+            border: '#334155',
+            danger: '#ef4444'
+          }
+        }
+      }
+    };
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      scroll-behavior: smooth;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      transition: transform 0.3s ease;
+    }
+    .nav-link.active {
+      background-color: rgba(212, 175, 55, 0.1);
+      color: #d4af37;
+      border-left: 4px solid #d4af37;
+    }
+
+    /* Scrollbar Customization */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+
+    /* Animasi Fade In */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Step Indicator */
+    .step-number {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+      color: #0f172a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 4px 6px rgba(212, 175, 55, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-bg-dark text-text-main">
+
+  <!-- Top Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-bg-card/90 backdrop-blur-sm border-b border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <img src="https://inikatalogku.biz.id/web-app-manifest-192x192.png" alt="Logo" class="w-8 h-8 rounded-lg">
+          <span class="font-jakarta font-bold text-lg text-primary">Tutorial IniKatalogku</span>
+        </div>
+        <div class="hidden md:flex items-center gap-4">
+          <a href="#registrasi" class="text-text-muted hover:text-primary transition-colors text-sm">Registrasi</a>
+          <a href="#login" class="text-text-muted hover:text-primary transition-colors text-sm">Login</a>
+          <a href="#dashboard" class="text-text-muted hover:text-primary transition-colors text-sm">Dashboard</a>
+          <a href="#produk" class="text-text-muted hover:text-primary transition-colors text-sm">Produk</a>
+          <a href="#order" class="text-text-muted hover:text-primary transition-colors text-sm">Order</a>
+        </div>
+        <button class="md:hidden text-text-main" onclick="toggleSidebar()">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="flex pt-16">
+    <!-- Sidebar (Mobile & Desktop) -->
+    <aside id="sidebar" class="sidebar fixed md:sticky top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-bg-card border-r border-border overflow-y-auto z-40 -translate-x-full md:translate-x-0">
+      <div class="p-4">
+        <h3 class="text-xs uppercase tracking-wider text-text-muted mb-4 px-4">Daftar Isi</h3>
+        <ul class="space-y-1">
+          <li><a href="#intro" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">Pendahuluan</a></li>
+          <li><a href="#registrasi" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">1. Registrasi Akun</a></li>
+          <li><a href="#login" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">2. Login & Password</a></li>
+          <li><a href="#lupa-password" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">3. Lupa Password</a></li>
+          <li><a href="#dashboard" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">4. Dashboard & Trial</a></li>
+          <li><a href="#produk" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">5. Manajemen Produk</a></li>
+          <li><a href="#pengaturan" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">6. Pengaturan Toko</a></li>
+          <li><a href="#order" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">7. Manajemen Order</a></li>
+          <li><a href="#share" class="nav-link block py-2.5 px-4 rounded text-sm hover:bg-bg-dark transition-colors">8. Bagikan Katalog</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-10 max-w-5xl mx-auto w-full">
+      
+      <!-- Intro Section -->
+      <section id="intro" class="mb-16 fade-in">
+        <div class="bg-gradient-to-br from-bg-card to-bg-dark border border-border rounded-2xl p-8 shadow-xl">
+          <h1 class="text-3xl md:text-4xl font-bold font-jakarta mb-4 text-primary">Selamat Datang di Tutorial IniKatalogku</h1>
+          <p class="text-text-muted mb-6 leading-relaxed">
+            Panduan lengkap untuk menguasai Backoffice IniKatalogku. Mulai dari membuat akun, login, mengelola produk, hingga memproses pesanan pelanggan Anda. Ikuti langkah-langkah di bawah ini dengan teliti.
+          </p>
+          <div class="flex flex-wrap gap-4 text-sm">
+
+            <span class="bg-blue-900/30 border border-blue-800 text-blue-300 px-4 py-2 rounded-lg flex items-center gap-2">
+              <i class="fas fa-clock"></i> Estimasi Baca: 10 Menit
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1. Registrasi -->
+      <section id="registrasi" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-user-plus text-primary"></i> 1. Registrasi Akun Baru
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Jika Anda belum memiliki akun, Anda perlu melakukan registrasi terlebih dahulu. Klik tombol <strong class="text-white">"Buat Akun Baru"</strong> di halaman login.</p>
+          
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div class="step-number">1</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Isi Data Diri</h3>
+                <p class="text-text-muted text-sm">Masukkan Email aktif, Nama Lengkap, Username yang diinginkan, dan Password. Pastikan password mudah diingat namun sulit ditebak.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">2</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Verifikasi Nomor HP</h3>
+                <p class="text-text-muted text-sm">Masukkan Nomor HP yang <strong class="text-yellow-300">sudah terdaftar di sistem IniKatalogku</strong>. Sistem akan menolak pendaftaran jika nomor HP belum terdaftar.</p>
+                <div class="mt-2 bg-bg-dark border-l-4 border-yellow-500 text-yellow-200 p-3 rounded text-xs">
+                  <i class="fas fa-triangle-exclamation mr-1"></i> Pastikan format nomor HP diawali dengan "08...".
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">3</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Klik "Daftar Akun"</h3>
+                <p class="text-text-muted text-sm">Jika semua data valid dan nomor HP terdaftar, Anda akan mendapat notifikasi "Registrasi berhasil" dan otomatis diarahkan ke halaman Login.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Login -->
+      <section id="login" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-right-to-bracket text-primary"></i> 2. Login & Ganti Password Sementara
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Jika Anda sudah memiliki akun, masukkan Username dan Password di halaman utama, lalu klik <strong class="text-white">"Masuk"</strong>.</p>
+          
+          <div class="bg-blue-900/20 border border-blue-800 rounded-lg p-4 flex gap-3">
+            <i class="fas fa-circle-info text-blue-400 text-xl mt-1"></i>
+            <div>
+              <h4 class="font-semibold text-blue-300 mb-1">Kondisi Password Sementara</h4>
+              <p class="text-blue-200 text-sm">Jika Anda login menggunakan password sementara (lupa password), Anda akan dipaksa masuk ke halaman <strong>"Ganti Password"</strong>. Anda harus membuat password baru (minimal 6 karakter) sebelum dapat mengakses Dashboard.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4">
+            <div class="step-number">1</div>
+            <div>
+              <h3 class="font-semibold text-lg mb-1">Masuk ke Dashboard</h3>
+              <p class="text-text-muted text-sm">Setelah berhasil login, klik tombol <strong class="text-white">"Klik untuk melanjutkan"</strong> di Welcome Screen untuk masuk ke Dashboard utama.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Lupa Password -->
+      <section id="lupa-password" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-key text-primary"></i> 3. Lupa Password
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Jika Anda lupa password, gunakan fitur "Lupa Password" di bawah form login.</p>
+          
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div class="step-number">1</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Pilih Mode Pencarian</h3>
+                <p class="text-text-muted text-sm">Anda bisa mencari akun berdasarkan <strong>Username</strong> atau <strong>Email</strong>. Klik tombol "Cari Berdasarkan..." untuk berganti mode.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">2</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Kirim Password Sementara</h3>
+                <p class="text-text-muted text-sm">Masukkan Username/Email Anda, lalu klik "Kirim Password Sementara". Sistem akan mengirim email berisi password acak ke email Anda.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">3</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Login dengan Password Baru</h3>
+                <p class="text-text-muted text-sm">Buka email Anda, catat password sementara tersebut, lalu login dengan password tersebut. Anda akan otomatis diminta membuat password baru permanen (Lihat bagian Login di atas).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Dashboard & Trial -->
+      <section id="dashboard" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-gauge-high text-primary"></i> 4. Dashboard & Status Trial
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Di Dashboard, Anda akan melihat statistik stok, tombol aksi cepat, dan tabel produk.</p>
+          
+          <div class="bg-purple-900/20 border border-purple-800 rounded-lg p-4 flex gap-3">
+            <i class="fas fa-hourglass-half text-purple-400 text-xl mt-1"></i>
+            <div>
+              <h4 class="font-semibold text-purple-300 mb-1">Sistem Masa Trial</h4>
+              <p class="text-purple-200 text-sm">Di bagian atas dashboard, terdapat banner Trial. Banner ini menginformasikan sisa hari masa trial Anda. Jika masa trial habis, Anda tidak bisa mengakses backoffice namun halaman katalog pelanggan tetap aktif selama 14 hari ke depan. Klik "Info" untuk melihat detail tanggal mulai dan berakhir.</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-lg mb-3">Widget Statistik Stok</h3>
+            <p class="text-text-muted text-sm mb-4">Di dashboard terdapat 3 kotak statistik berwarna yang menampilkan status stok toko Anda:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-red-900/20 border border-red-900/50 rounded-lg p-4 text-center">
+                <i class="fas fa-boxes-stacked text-red-400 text-2xl mb-2"></i>
+                <h4 class="font-bold text-red-300">Produk Habis</h4>
+                <p class="text-xs text-text-muted mt-1">Klik untuk melihat produk dengan stok 0.</p>
+              </div>
+              <div class="bg-yellow-900/20 border border-yellow-900/50 rounded-lg p-4 text-center">
+                <i class="fas fa-triangle-exclamation text-yellow-300 text-2xl mb-2"></i>
+                <h4 class="font-bold text-yellow-200">Stok Rendah</h4>
+                <p class="text-xs text-text-muted mt-1">Klik untuk melihat produk yang stoknya hampir habis (batas dapat diatur di Pengaturan).</p>
+              </div>
+              <div class="bg-green-900/20 border border-green-900/50 rounded-lg p-4 text-center">
+                <i class="fas fa-circle-check text-green-400 text-2xl mb-2"></i>
+                <h4 class="font-bold text-green-300">Stok Aman</h4>
+                <p class="text-xs text-text-muted mt-1">Klik untuk melihat produk dengan stok melimpah.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Manajemen Produk -->
+      <section id="produk" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-bag-shopping text-primary"></i> 5. Manajemen Produk
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Klik tombol <strong class="text-white">"+ Tambah"</strong> untuk menambahkan produk baru.</p>
+          
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div class="step-number">1</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Isi Detail Produk</h3>
+                <p class="text-text-muted text-sm">Isi Judul, Kategori (bisa diketik manual atau pilih dari daftar), Harga, Stok, Berat (gram), dan Deskripsi produk. Anda juga bisa mencentang <strong>Best Seller</strong> untuk menandai produk unggulan.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">2</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Upload Foto & Cropping</h3>
+                <p class="text-text-muted text-sm">Klik area upload untuk memilih foto. Setelah dipilih, Anda akan masuk ke mode <strong>Crop</strong>. Geser gambar untuk menyesuaikan posisi, cubit (pinch) atau gunakan tombol Zoom untuk mengatur ukuran. Klik "Terapkan" untuk mengupload.</p>
+                <div class="mt-2 bg-bg-dark border-l-4 border-primary text-primary p-3 rounded text-xs">
+                  <i class="fas fa-lightbulb mr-1"></i> Tips: Upload minimal 1 foto. Gunakan rasio kotak (1:1) agar hasil terbaik di katalog pelanggan.
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">3</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Simpan Produk</h3>
+                <p class="text-text-muted text-sm">Tunggu hingga proses upload foto selesai (ikon loading hilang). Kemudian klik <strong class="text-white">"Simpan Produk"</strong>. Produk akan langsung masuk ke daftar tabel.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">4</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Edit & Hapus Produk</h3>
+                <p class="text-text-muted text-sm">Di tabel produk, klik ikon <i class="fas fa-pencil text-text-muted"></i> Pencil untuk mengubah data, atau ikon <i class="fas fa-trash text-text-muted"></i> Tong sampah untuk menghapus produk. Konfirmasi penghapusan akan muncul.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Pengaturan Toko -->
+      <section id="pengaturan" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-store text-primary"></i> 6. Pengaturan Toko
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Akses melalui ikon Avatar (pojok kanan atas) -> <strong>Pengaturan Toko</strong>. Atur identitas toko Anda agar tampil menarik di halaman pelanggan.</p>
+          
+          <ul class="space-y-3 text-sm text-text-muted">
+            <li class="flex gap-2"><i class="fas fa-circle-check text-green-400 mt-1"></i> <strong class="text-white">Identitas:</strong> Nama Toko, Tagline, dan Upload Logo.</li>
+            <li class="flex gap-2"><i class="fas fa-circle-check text-green-400 mt-1"></i> <strong class="text-white">Kontak:</strong> Isi Nomor WhatsApp Admin (format 628...) untuk menerima pesanan otomatis.</li>
+            <li class="flex gap-2"><i class="fas fa-circle-check text-green-400 mt-1"></i> <strong class="text-white">Form Pesanan:</strong> Centang bagian "Tampil" agar field muncul di halaman pelanggan, dan centang "Wajib" agar field tersebut wajib diisi oleh pembeli sebelum checkout.</li>
+            <li class="flex gap-2"><i class="fas fa-circle-check text-green-400 mt-1"></i> <strong class="text-white">Notifikasi Stok:</strong> Atur batas minimal stok (misal 5). Jika stok turun di bawah batas, Anda akan mendapat peringatan lonceng di dashboard.</li>
+            <li class="flex gap-2"><i class="fas fa-circle-check text-green-400 mt-1"></i> <strong class="text-white">Tema Warna:</strong> Pilih warna tema katalog Anda (Gold, Blue, Green, Pink, atau Purple).</li>
+          </ul>
+          <p class="text-text-muted text-sm">Jangan lupa klik <strong class="text-white">"Simpan Pengaturan"</strong> di bagian bawah.</p>
+        </div>
+      </section>
+
+      <!-- 7. Manajemen Order -->
+      <section id="order" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-cart-shopping text-primary"></i> 7. Manajemen Order
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Klik tombol <strong class="text-white">"Order"</strong> untuk melihat daftar pesanan yang masuk dari pelanggan.</p>
+          
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div class="step-number">1</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Filter & Pencarian</h3>
+                <p class="text-text-muted text-sm">Gunakan kotak statistik (New, Pending, Proses, Batal) untuk memfilter status pesanan. Gunakan search bar untuk mencari berdasarkan Nama, WA, atau Order ID.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">2</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Update Status</h3>
+                <p class="text-text-muted text-sm">Klik badge Status (misal: New Order/Pending) pada baris pesanan untuk mengubahnya menjadi "Diproses" atau "Batal". Anda juga bisa centang beberapa order sekaligus dan gunakan menu Batch Update untuk mengubah status massal.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">3</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Lihat Detail & Chat WA</h3>
+                <p class="text-text-muted text-sm">Klik ikon Mata (<i class="fas fa-eye text-text-muted"></i>) untuk melihat rincian pesanan. Di dalamnya, ada tombol <strong class="text-white">"Chat WhatsApp"</strong> yang akan otomatis membuka WA dengan teast pesan template.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="step-number">4</div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Export Data</h3>
+                <p class="text-text-muted text-sm">Klik tombol <strong class="text-white">"Export Excel"</strong> untuk mengunduh seluruh data order ke dalam format .XLSX.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Bagikan Katalog -->
+      <section id="share" class="mb-16 fade-in">
+        <h2 class="text-2xl md:text-3xl font-bold font-jakarta mb-6 flex items-center gap-3">
+          <i class="fas fa-share-nodes text-primary"></i> 8. Bagikan Katalog
+        </h2>
+        <div class="bg-bg-card border border-border rounded-xl p-6 space-y-6">
+          <p class="text-text-muted">Klik tombol <strong class="text-white">"Share"</strong> untuk mendapatkan link toko Anda.</p>
+          <ul class="space-y-3 text-sm text-text-muted">
+            <li class="flex gap-2"><i class="fas fa-copy text-primary mt-1"></i> <strong class="text-white">Salin Link:</strong> Copy link katalog, lalu paste ke sosial media atau WA pelanggan Anda.</li>
+            <li class="flex gap-2"><i class="fas fa-share-from-square text-primary mt-1"></i> <strong class="text-white">Bagikan Native:</strong> Gunakan fitur share bawaan HP/Chrome Anda untuk langsung share ke WA/IG.</li>
+            <li class="flex gap-2"><i class="fas fa-link text-primary mt-1"></i> <strong class="text-white">Buka Katalog:</strong> Buka pratinjau katalog Anda di tab baru untuk memastikan tampilannya sudah sesuai.</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer class="mt-20 py-6 text-center text-xs text-text-muted border-t border-border">
+        <p>© 2026 IniKatalogku Tutorial. All rights reserved.</p>
+        <div class="flex justify-center gap-3 mt-2">
+          <a href="https://inikatalogku.biz.id" target="_blank" class="hover:text-primary">Official Website</a>
+          <span>•</span>
+          <a href="https://wa.me/6285117517554" target="_blank" class="hover:text-primary">Hubungi CS</a>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-8 right-8 w-12 h-12 bg-primary text-bg-dark rounded-full shadow-lg hidden items-center justify-center hover:scale-110 transition-transform z-50">
+    <i class="fas fa-chevron-up text-xl"></i>
+  </button>
+
+  <script>
+    // Toggle Sidebar Mobile
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    // Close sidebar when clicking link (mobile)
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          document.getElementById('sidebar').classList.add('-translate-x-full');
+        }
+      });
+    });
+
+    // Intersection Observer for Fade In
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Active Link on Scroll (robust)
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const setActiveLink = (id) => {
+      if (!id) return;
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${id}`) {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    let currentActive = '';
+    const scrollSpyObserver = new IntersectionObserver((entries) => {
+      const docHeight = document.documentElement.scrollHeight;
+      const nearBottom = (window.innerHeight + window.scrollY >= docHeight - 12);
+      if (nearBottom) {
+        const lastId = sections[sections.length - 1]?.getAttribute('id');
+        if (lastId && lastId !== currentActive) {
+          currentActive = lastId;
+          setActiveLink(lastId);
+        }
+        return;
+      }
+      let topmost = null;
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          if (topmost == null || entry.boundingClientRect.top < topmost.boundingClientRect.top) {
+            topmost = entry;
+          }
+        }
+      }
+      if (topmost) {
+        const id = topmost.target.getAttribute('id');
+        if (id && id !== currentActive) {
+          currentActive = id;
+          setActiveLink(id);
+        }
+      }
+    }, { rootMargin: '-100px 0px -65% 0px', threshold: 0 });
+
+    sections.forEach(section => scrollSpyObserver.observe(section));
+
+    const updateActiveByScroll = () => {
+      const docHeight = document.documentElement.scrollHeight;
+      if (window.innerHeight + window.scrollY >= docHeight - 12) {
+        const lastId = sections[sections.length - 1]?.getAttribute('id');
+        if (lastId && lastId !== currentActive) {
+          currentActive = lastId;
+          setActiveLink(lastId);
+        }
+        return;
+      }
+      let bestId = null;
+      let bestDist = Infinity;
+      for (const s of sections) {
+        const rect = s.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 1.0 && rect.bottom >= 20) {
+          const dist = Math.abs(rect.top - 60);
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestId = s.getAttribute('id');
+          }
+        }
+        }
+      if (bestId && bestId !== currentActive) {
+        currentActive = bestId;
+        setActiveLink(bestId);
+      }
+    };
+
+    let scrollTick = null;
+    window.addEventListener('scroll', () => {
+      const btnTop = document.getElementById('backToTop');
+      if (window.scrollY > 300) {
+        btnTop.classList.remove('hidden');
+        btnTop.classList.add('flex');
+      } else {
+        btnTop.classList.add('hidden');
+        btnTop.classList.remove('flex');
+      }
+      if (scrollTick) return;
+      scrollTick = requestAnimationFrame(() => {
+        updateActiveByScroll();
+        scrollTick = null;
+      });
+    }, { passive: true });
+
+    if (sections.length) {
+      const docHeight = document.documentElement.scrollHeight;
+      if (window.innerHeight + window.scrollY >= docHeight - 12) {
+        const lastId = sections[sections.length - 1].getAttribute('id');
+        currentActive = lastId;
+        setActiveLink(lastId);
+      } else {
+        let bestId = null;
+        let bestDist = Infinity;
+        for (const s of sections) {
+          const rect = s.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.999 && rect.bottom >= 40) {
+          const dist = Math.abs(rect.top - 80);
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestId = s.getAttribute('id');
+          }
+        }
+        }
+        const initialId = bestId || sections[0].getAttribute('id');
+        currentActive = initialId;
+        setActiveLink(initialId);
+      }
+    }
+
+    // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
